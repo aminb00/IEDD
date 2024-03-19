@@ -1,7 +1,7 @@
 # Italian Emissions Daily Dataset (IEDD)
 
 ## Project Overview
-The IEDDC project aims to construct a dataset representing daily emissions for Italian municipalities by leveraging the detailed data provided by the CAMSREG datasets and employing CAMS-TEMPO weight factors for temporal distribution.
+The IEDD project aims to construct a dataset representing daily emissions for Italian municipalities by leveraging the detailed data provided by the CAMSREG datasets and employing CAMS-TEMPO weight factors for temporal distribution.
 
 ### Background
 - **CAMS-TEMPO**: A dataset that offers temporal profiles for global and European emissions, providing gridded monthly, daily, weekly, and hourly weight factors crucial for atmospheric chemistry modeling.

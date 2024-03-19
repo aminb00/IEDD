@@ -4,9 +4,9 @@
 The IEDD project aims to construct a dataset representing daily emissions for Italian municipalities by leveraging the detailed data provided by the CAMSREG datasets and employing CAMS-TEMPO weight factors for temporal distribution.
 
 ### Background
-- **CAMS-TEMPO**: A dataset that offers temporal profiles for global and European emissions, providing gridded monthly, daily, weekly, and hourly weight factors crucial for atmospheric chemistry modeling.
-
 - **CAMS-REG**: A high-resolution European emission inventory for an 18-year time series (2000–2017) at 0.05° × 0.1° grid resolution, designed to support air quality modeling. This inventory encompasses key air pollutants and is based on officially reported emissions data, complemented by the GAINS model estimates.
+
+- **CAMS-TEMPO**: A dataset that offers temporal profiles for global and European emissions, providing gridded monthly, daily, weekly, and hourly weight factors crucial for atmospheric chemistry modeling.
 
 ## Methodology
 1. **Annual Data Extraction**: Harvest yearly emissions data from the CAMS-REG dataset for Italy.

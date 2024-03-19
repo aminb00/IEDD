@@ -1,27 +1,31 @@
-# Italian Emissions Daily Dataset Project
+# Italian Emissions Daily Dataset (IEDD)
 
 ## Project Overview
-This project aims to construct a comprehensive dataset of daily emission figures for Italian municipalities. Starting from the CAMSREG annual datasets, which provide detailed emission data across various sectors, we employ the CAMSTEMPO approach to distill this information into a daily format. The ultimate goal is to integrate these transformed daily emissions data with the geographic layout of Italian municipalities, thereby producing a granular and dynamic environmental dataset.
+The IEDDC project aims to construct a dataset representing daily emissions for Italian municipalities by leveraging the detailed data provided by the CAMSREG datasets and employing CAMS-TEMPO weight factors for temporal distribution.
 
-## Data Sources
-- **CAMSREG Datasets**: Provide annual emissions data across multiple sectors.
-- **CAMSTEMPO**: A methodology used to convert annual data into daily emission estimates.
+### Background
+- **CAMS-TEMPO**: A dataset that offers temporal profiles for global and European emissions, providing gridded monthly, daily, weekly, and hourly weight factors crucial for atmospheric chemistry modeling.
+
+- **CAMS-REG**: A high-resolution European emission inventory for an 18-year time series (2000–2017) at 0.05° × 0.1° grid resolution, designed to support air quality modeling. This inventory encompasses key air pollutants and is based on officially reported emissions data, complemented by the GAINS model estimates.
 
 ## Methodology
-1. **Data Extraction**: We begin by extracting the annual emissions data from the CAMSREG datasets, which includes sector-wise and total emissions for the entire country.
-   
-2. **Data Transformation**: Utilizing the CAMSTEMPO approach, we then convert the annual figures into daily estimates. This involves disaggregating the yearly data, taking into account seasonal variations, and other temporal factors that affect emission levels.
-   
-3. **Data Integration**: The daily emissions data are then mapped to the Italian municipalities. This step involves creating a relational structure that connects emission figures with respective local administrative boundaries.
+1. **Annual Data Extraction**: Harvest yearly emissions data from the CAMS-REG dataset for Italy.
 
-4. **Dataset Construction**: The final output is a structured dataset that offers daily emission insights for each municipality, ready to be used in various environmental analysis and policy-making processes.
+2. **Temporal Transformation**: Utilize CAMS-TEMPO to convert annual data points into daily emission estimates, reflecting fluctuations due to seasonal and other temporal factors.
+
+3. **Municipality Data Integration**: Map daily emissions to the respective Italian municipalities, aligning the data with administrative boundaries for localized analysis.
+
+4. **Dataset Compilation**: Assemble a structured dataset that encapsulates daily emission metrics per municipality, serving as a tool for environmental studies and policymaking.
 
 ## Repository Structure
-- `/annual_data`: Contains the original CAMSREG datasets.
-- `/daily_data`: Contains the transformed daily emissions data.
-- `/municipality_data`: Contains the geographic and administrative data for Italian municipalities.
-- `/scripts`: Contains all the scripts used for data extraction, transformation, and integration.
-- `/docs`: Documentation related to the CAMSTEMPO methodology and data schema.
+- `/annual_camsreg_data`: Original annual datasets from CAMS-REG.
+- `/daily_emissions`: Daily emissions data processed using CAMS-TEMPO.
+- `/municipality_boundaries`: Geospatial data of Italian municipalities.
+- `/transformation_scripts`: Scripts and methodologies for data processing.
+- `/documentation`: Detailed explanations of CAMS-TEMPO, CAMS-REG, and data structure.
+
+## Potential Applications
+- Environmental Impact Assessments: Analyzing the
 
 ## Usage
 The dataset constructed as part of this project can be utilized for various purposes, including but not limited to:

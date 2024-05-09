@@ -1,45 +1,57 @@
-# Italian Emissions Daily Dataset (IEDD)
+# 🌍 **Italian Emissions Daily Dataset (IEDD)**
 
-## Project Overview
-The IEDD project aims to construct a dataset representing daily emissions for Italian municipalities by leveraging the detailed data provided by the CAMSREG datasets and employing CAMS-TEMPO weight factors for temporal distribution.
+## 📜 **Project Overview**
+The IEDD project aims to build a comprehensive dataset representing daily emissions in Italian municipalities. The dataset leverages detailed data from the CAMS-REG-ANT datasets and employs CAMS-REG-TEMPO weight factors for accurate temporal distribution.
 
-### Background
-- **CAMS-REG**: A high-resolution European emission inventory for an 18-year time series (2000–2017) at 0.05° × 0.1° grid resolution, designed to support air quality modeling. This inventory encompasses key air pollutants and is based on officially reported emissions data, complemented by the GAINS model estimates.
+### 🔍 **Background**
+- **CAMS-REG-ANT**: 🌐 Annual emissions data covering key pollutants across Europe, such as **NOx, SO2, NH3, CO, PM10, PM2.5, CH4, NMVOCs,** and **CO2**. The spatial resolution is **0.05° x 0.1°**.
+  
+- **CAMS-REG-TEMPO**: 🗓️ Temporal profiles providing gridded monthly, daily, weekly, and hourly weight factors. These help distribute CAMS-REG-ANT data to offer a more granular temporal view, essential for accurate emissions modeling.
 
-- **CAMS-TEMPO**: A dataset that offers temporal profiles for global and European emissions, providing gridded monthly, daily, weekly, and hourly weight factors crucial for atmospheric chemistry modeling.
+## 🛠️ **Methodology**
+1. **Annual Data Extraction**: 📥 Extract yearly emissions data for Italy from the CAMS-REG-ANT dataset.
+2. **Temporal Transformation**: 🗓️ Convert annual emissions to daily estimates using the CAMS-REG-TEMPO profiles. Each day reflects variations in monthly, weekly, and daily emissions patterns.
+3. **Municipality Data Integration**: 🗺️ Match daily emissions to each Italian municipality's administrative boundaries for localized analysis.
+4. **Dataset Compilation**: 📊 Compile the final dataset with daily emissions metrics per municipality, suitable for environmental studies and policymaking.
 
-## Methodology
-1. **Annual Data Extraction**: Harvest yearly emissions data from the CAMS-REG dataset for Italy.
+## 📑 **GNFR Sectors**
+The GNFR (Gridded Nomenclature for Reporting) sectors categorize emissions by activity:
 
-2. **Temporal Transformation**: Utilize CAMS-TEMPO to convert annual data points into daily emission estimates, reflecting fluctuations due to seasonal and other temporal factors.
+- **A Public Power and Heat Production**: 🔋 Emissions from public power, heat, and cogeneration plants.
+- **B Industrial Combustion**: 🏭 Emissions from industrial manufacturing combustion.
+- **C Other Stationary Combustion**: 🏠 Emissions not covered by public power or industrial combustion.
+- **D Fugitive Emissions**: ⛽ From extraction and distribution of fuels.
+- **E Solvent and Product Use**: 🧪 Solvents in processes and products.
+- **F Road Transport**: 🚗 Road vehicle emissions.
+- **G Shipping**: 🚢 Domestic and international shipping emissions.
+- **H Aviation**: ✈️ National and international aviation emissions.
+- **I Offroad Transport**: 🚜 Vehicles in agriculture and forestry.
+- **J Waste Treatment and Disposal**: 🗑️ Emissions from waste processes.
+- **K Agriculture**: 🌾 Agricultural production emissions.
+- **L Other Agricultural Sources**: 🌳 Emissions not classified above.
 
-3. **Municipality Data Integration**: Map daily emissions to the respective Italian municipalities, aligning the data with administrative boundaries for localized analysis.
+## 📂 **Repository Structure**
+- 📁 `/annual_camsreg_data`: CAMS-REG-ANT annual datasets.
+- 📁 `/daily_emissions`: Daily emissions processed using CAMS-REG-TEMPO.
+- 📁 `/municipality_boundaries`: Geospatial data of Italian municipalities.
+- 📁 `/transformation_scripts`: Scripts and methodologies for data processing.
+- 📁 `/documentation`: Detailed explanations of CAMS-REG-ANT, CAMS-REG-TEMPO, and data structure.
 
-4. **Dataset Compilation**: Assemble a structured dataset that encapsulates daily emission metrics per municipality, serving as a tool for environmental studies and policymaking.
+## 🏆 **Potential Applications**
+- **Environmental Impact Assessments**: 🌿 Analyze daily emissions impacts on local/regional environments.
+- **Policy Formulation**: 🏛️ Support policymakers in drafting environmental regulations.
+- **Public Awareness**: 📢 Increase public awareness of emissions at the municipality level.
 
-## Repository Structure
-- `/annual_camsreg_data`: Original annual datasets from CAMS-REG.
-- `/daily_emissions`: Daily emissions data processed using CAMS-TEMPO.
-- `/municipality_boundaries`: Geospatial data of Italian municipalities.
-- `/transformation_scripts`: Scripts and methodologies for data processing.
-- `/documentation`: Detailed explanations of CAMS-TEMPO, CAMS-REG, and data structure.
+## ⚙️ **Usage**
+The dataset can be used for environmental studies, policy development, and increasing public awareness. It offers comprehensive insights into temporal emission patterns.
 
-## Potential Applications
-- Environmental Impact Assessments: Analyzing the
+## 🙌 **Contributing**
+Contributions are welcome, such as:
+- 🛠️ Improving data extraction/transformation scripts.
+- 🔍 Enhancing the dataset with supplementary data.
+- 🐞 Reporting and fixing issues with data accuracy.
 
-## Usage
-The dataset constructed as part of this project can be utilized for various purposes, including but not limited to:
-- **Environmental Impact Studies**: Assess the daily emissions impact on local and regional environments.
-- **Policy Formulation**: Aid governmental bodies in crafting targeted environmental regulations and policies.
-- **Public Awareness**: Increase public awareness about the environmental footprint of different municipalities.
-
-## Contributing
-We welcome contributions from the community. You can contribute by:
-- Improving the existing scripts for data extraction and transformation.
-- Enhancing the dataset with additional data points or integrating supplementary datasets.
-- Reporting and fixing issues related to data accuracy and integrity.
-
-## License
+## 📜 **License**
 This project is licensed under the [MIT License](LICENSE).
 
 ## Contact

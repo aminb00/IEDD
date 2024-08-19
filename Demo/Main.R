@@ -58,9 +58,12 @@ source("C:/Users/aminb/Desktop/TesiBorqal/Code/Demo/TEMPO-Profiles/ProfilesExtra
 nc_file_path <- "C:\\Users\\aminb\\Desktop\\TesiBorqal\\Data\\Raw\\CAMS-TEMPO\\CAMS-REG-TEMPO_EUR_0.1x0.1_tmp_weights_v3.1_daily.nc"
 FD_C <- extract_and_store_profiles_in_list(nc_file_path, "FD_C")
 
-nc_file_path <- "C:\\Users\\aminb\\Desktop\\TesiBorqal\\Data\\Raw\\CAMS-TEMPO\\CAMS-REG-TEMPO_EUR_0.1x0.1_tmp_weights_v3.1_monthly.nc"
-FM_B <- extract_and_store_profiles_in_list(nc_file_path, "FM_B")
+#building daily matrix for sector C
 
-df <- FD_C[[120]]  # Accesso al 120° giorno
+FD_C_matrix <- NULL
+
+for (day in 1:366) {
+    FD_C_matrix <- abind(FD_C_matrix, dcast(FD_C[[day]], x ~ y, value.var = "value"), along = 3)
+}
 
 

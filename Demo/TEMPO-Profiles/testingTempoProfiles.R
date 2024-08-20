@@ -132,4 +132,9 @@ process_profile <- function(nc_file_path, profile_name, start_year, output_dir) 
   }
 }
 
+# Esempio di utilizzo
+nc_file_path <- "C:\\Users\\aminb\\Desktop\\TesiBorqal\\Data\\Raw\\CAMS-TEMPO\\CAMS-REG-TEMPO_EUR_0.1x0.1_tmp_weights_v3.1_daily.nc"
+output_dir <- "C:\\Users\\aminb\\Desktop\\IEDD\\Demo\\Data\\Processed"
 
+# Gestire il profilo selezionato
+process_profile(nc_file_path, "FD_C", 2000, output_dir)

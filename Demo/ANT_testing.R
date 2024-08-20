@@ -1,4 +1,5 @@
-
+library(abind)
+library(reshape2)
 
 FD_C_matrix<-NULL
 day<-1
@@ -12,15 +13,15 @@ for(y in 1:21)
     for(day in 1:366){  
     leap_year<-TRUE
     FD_C_matrix<-abind(FD_C_matrix,dcast(FD_C[[day+indexFromYear]], x ~ y, value.var = "value"),along=3)
-    
-            }
+    FD_C[[day+indexFromYear]]<-NULL
+    }
   }
   else
   {
     for(day in 1:365){  
       leap_year<-FALSE
       FD_C_matrix<-abind(FD_C_matrix,dcast(FD_C[[day+indexFromYear]], x ~ y, value.var = "value"),along=3)
-      
+      FD_C[[day+indexFromYear]]<-NULL
     }
   }
   if(leap_year)
@@ -31,7 +32,7 @@ for(y in 1:21)
   #salviamo in file rds rinominato con anni a partire da 2000
   saveRDS(FD_C_matrix, file = paste0("C:\\Users\\aminb\\Desktop\\IEDD\\Demo\\Data\\FD_C-",1999+y,".rds"))
   rm(FD_C_matrix)
-  gm()
+  gc()
 }
 
 

@@ -1,3 +1,5 @@
+library(abind)
+
 
 #CAMS-REG-ANT
 
@@ -58,12 +60,41 @@ source("C:/Users/aminb/Desktop/TesiBorqal/Code/Demo/TEMPO-Profiles/ProfilesExtra
 nc_file_path <- "C:\\Users\\aminb\\Desktop\\TesiBorqal\\Data\\Raw\\CAMS-TEMPO\\CAMS-REG-TEMPO_EUR_0.1x0.1_tmp_weights_v3.1_daily.nc"
 FD_C <- extract_and_store_profiles_in_list(nc_file_path, "FD_C")
 
-#building daily matrix for sector C
 
-FD_C_matrix <- NULL
+#Save CAMS-REG-TEMPO data in rds files by years
 
-for (day in 1:366) {
-    FD_C_matrix <- abind(FD_C_matrix, dcast(FD_C[[day]], x ~ y, value.var = "value"), along = 3)
+library(abind)
+library(reshape2)
+
+day<-1
+indexFromYear<-1
+leap_year<-FALSE
+FD_C_matrix<-NULL
+
+for(y in 1:21)
+{
+  if(y%%4==0 || y==1)
+  {  
+    for(day in 1:366){  
+      leap_year<-TRUE
+      FD_C_matrix<-abind(FD_C_matrix,dcast(FD_C[[day+indexFromYear]], x ~ y, value.var = "value"),along=3)
+      FD_C[[day+indexFromYear]]<-NULL
+    }
+  }
+  else
+  {
+    for(day in 1:365){  
+      leap_year<-FALSE
+      FD_C_matrix<-abind(FD_C_matrix,dcast(FD_C[[day+indexFromYear]], x ~ y, value.var = "value"),along=3)
+      FD_C[[day+indexFromYear]]<-NULL
+    }
+  }
+  if(leap_year)
+  { indexFromYear<-indexFromYear+366 }
+  else
+  { indexFromYear<-indexFromYear+365 }
+  
+  #Save in rds file renamed with years starting from 2000
+  saveRDS(FD_C_matrix, file = paste0("IEDD\\Demo\\Data\\FD_C_",1999+y,".rds"))
+  FD_C_matrix<-NULL
 }
-
-

@@ -14,6 +14,8 @@ The IEDD project aims to build a comprehensive dataset representing daily emissi
 3. **Municipality Data Integration**: 🗺️ Match daily emissions to each Italian municipality's administrative boundaries for localized analysis.
 4. **Dataset Compilation**: 📊 Compile the final dataset with daily emissions metrics per municipality, suitable for environmental studies and policymaking.
 
+![Flow Chart of Methodology](IEDD_FlowChart_V1.png)
+
 ## 📑 **GNFR Sectors**
 The GNFR (Gridded Nomenclature for Reporting) sectors categorize emissions by activity:
 

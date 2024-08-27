@@ -1,27 +1,23 @@
-# DataExtraction.R
-
 library(ncdf4)
 library(reshape2)
+library(abind)
 
 # Source the utility and configuration files
 source("Demo/Utils.R")
 source("Demo/Config.R")
 
+
 # Function to extract data from all sectors in a NetCDF file
 extractAllSectors <- function(nc_file_path) {
+  # Load the lon, lat, lon_idx, lat_idx from RDS if available
+  lon_lat_data <- readRDS("Demo/Data/Processed/ANT_data/lon_lat_idx.rds")
+  
   # Open the NetCDF file
   nc <- open_nc_file(nc_file_path)
   
-  # Get longitude and latitude variables
-  lon <- ncvar_get(nc, "lon")
-  lat <- ncvar_get(nc, "lat")
-  
-  # Determine the indices within the specified boundaries
-  lon_idx <- which(lon >= boundary[1] & lon <= boundary[2])
-  lat_idx <- which(lat >= boundary[3] & lat <= boundary[4])
-  
-  #Save lon,lat,lon_idx,lat_idx in rds file
-  saveRDS(list(lon=lon,lat=lat,lon_idx=lon_idx,lat_idx=lat_idx), "Demo/Data/Processed/ANT_data/lon_lat_idx.rds")
+  # Extract relevant lon and lat indices
+  lon_idx <- lon_lat_data$lon_idx
+  lat_idx <- lon_lat_data$lat_idx
   
   # List of sector names corresponding to the variables in the NetCDF file
   sector_names <- list(
@@ -53,7 +49,7 @@ extractAllSectors <- function(nc_file_path) {
   nc_close(nc)
   
   # Return the extracted data along with the selected longitude and latitude
-  return(list(sector_data = sector_data, lon = lon[lon_idx], lat = lat[lat_idx]))
+  return(list(sector_data = sector_data, lon = lon_lat_data$lon[lon_idx], lat = lon_lat_data$lat[lat_idx]))
 }
 
 # Function to extract data for a specific sector and year
@@ -111,42 +107,6 @@ add_new_years_data <- function(nc_file_path, all_years_data) {
   return(all_years_data)
 }
 
-
-library(abind)
-
-# Function to build the yearly 4D matrix from the list of all years
-build_yearly_matrix <- function(all_data_list) {
-  all_data_matrix <- NULL
-  
-  for (year in 1:length(all_data_list)) {
-    year_matrix <- NULL
-    
-    for (sector in all_data_list[[year]]) {
-      # Reshape and combine the sector data for each year
-      year_matrix <- abind(year_matrix, dcast(sector, x ~ y, value.var = "value"), along = 3)
-    }
-    
-    # Combine all years into a single 4D matrix
-    all_data_matrix <- abind(all_data_matrix, year_matrix, along = 4)
-  }
-  
-  londim<-unique(all_data_list$`Year 2000`$A$x)
-  latdim<-unique(all_data_list$`Year 2000`$A$y)
-  
-  #modify dimnames of all_data_matrix
-  
-  dimnames(all_data_matrix)<-list(
-    lon=londim,
-    lat=latdim,
-    sector=names(all_data_list$`Year 2000`),
-    year=names(all_data_list)
-  )
-  
-  return(all_data_matrix)
-}
-library(reshape2)
-library(abind)
-
 # Function to build the yearly 4D matrix from the list of all years
 build_yearly_matrix <- function(all_data_list) {
   all_data_matrix <- NULL
@@ -169,10 +129,15 @@ build_yearly_matrix <- function(all_data_list) {
     all_data_matrix <- abind(all_data_matrix, year_matrix, along = 4)
   }
   
+  #get lon lat from rds
+  lon_lat_data <- readRDS("Demo/Data/Processed/ANT_data/lon_lat_idx.rds")
+  
+  
+  
   # Optional: Add dimension names for better clarity
   dimnames(all_data_matrix) <- list(
-    x = round(unique(all_data_list$`Year 2000`$A$x),digits = 2),
-    y = round(unique(all_data_list$`Year 2000`$A$y),digits = 2),
+    x = round(unique(all_data_list$`Year 2000`$A$x), digits = 2),
+    y = round(unique(all_data_list$`Year 2000`$A$y), digits = 2),
     sector = names(all_data_list$`Year 2000`),
     year = names(all_data_list)
   )

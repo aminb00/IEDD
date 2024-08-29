@@ -124,15 +124,6 @@ df$value <- as.vector(mapdata)
 df2<-all_data_list$`Year 2000`$C
 names(df) <- c("lon", "lat", "value")
 
-# Plot the map
-ggplot(df, aes(x = lon, y = lat, fill = value)) +
-  geom_tile() +
-  scale_fill_gradient(low = "white", high = "red") +
-  labs(title = "NH3 Emission Map", x = "Longitude", y = "Latitude")
-
-library(ggplot2)
-
-library(ggplot2)
 
 library(ggplot2)
 

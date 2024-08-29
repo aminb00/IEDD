@@ -129,18 +129,19 @@ build_yearly_matrix <- function(all_data_list) {
     all_data_matrix <- abind(all_data_matrix, year_matrix, along = 4)
   }
   
-  #get lon lat from rds
-  lon_lat_data <- readRDS("Demo/Data/Processed/ANT_data/lon_lat_idx.rds")
+  # Round the coordinates to 2 decimal places
+  lon_rounded <- round(lon_lat_idx$lon[lon_lat_idx$lon_idx], 2)
+  lat_rounded <- round(lon_lat_idx$lat[lon_lat_idx$lat_idx], 2)
   
-  #FINIRE
-  
-  # Optional: Add dimension names for better clarity
+  # Assign dimension names to the all_data_matrix
   dimnames(all_data_matrix) <- list(
-    x = round(unique(all_data_list$`Year 2000`$A$x), digits = 2),
-    y = round(unique(all_data_list$`Year 2000`$A$y), digits = 2),
-    sector = names(all_data_list$`Year 2000`),
-    year = names(all_data_list)
+    x = lon_rounded,  # Rounded longitude coordinates
+    y = lat_rounded,  # Rounded latitude coordinates
+    sector = names(all_data_list$`Year 2000`),  # Sectors (e.g., climate variables)
+    year = names(all_data_list)  # Years (e.g., 2000, 2001, etc.)
   )
+  
+  
   
   return(all_data_matrix)
 }

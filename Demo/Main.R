@@ -62,18 +62,19 @@ plot(time_series, type="l", col="blue", xlab="Time", ylab="NH3 (mg/m^2/day)", ma
 
 source("Demo/ExtractTEMPO/ProfilesExtraction.R")
 
+
 # Esempio di utilizzo
 # Definire i percorsi dei file .nc se non vengono forniti dall'utente
-nc_file_path_daily_weekly <- "Demo\\Data\\Raw\\CAMS-REG-TEMPO\\CAMS-REG-TEMPO_EUR_0.1x0.1_tmp_weights_v3.1.nc"
-nc_file_path_monthly <- "Demo\\Data\\Raw\\CAMS-REG-TEMPO\\CAMS-REG-TEMPO_EUR_0.1x0.1_tmp_weights_v3.1_monthly.nc"
-output_dir <- "Demo\\Data\\Processed"
+nc_file_path_daily_weekly <- "Demo\\Data\\Raw\\CAMS-REG-TEMPO\\CAMS-REG-TEMPO_EUR_0.1x0.1_tmp_weights_v3.1_daily.nc"
+nc_file_path_monthly <-"Demo\\Data\\Raw\\CAMS-REG-TEMPO\\CAMS-REG-TEMPO_EUR_0.1x0.1_tmp_weights_v3.1_monthly.nc"
+output_dir <- "Demo\\Data\\Processed\\TEMPO_data"
 
 # Gestire il profilo selezionato
-process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FW_F",NULL, output_dir)
-process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FW_H",NULL, output_dir)
-process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FD_C",NULL, output_dir)
-process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FD_L_NH3",NULL, output_dir)
-process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FD_K_NH3_NOX",NULL, output_dir)
+process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FW_F", output_dir)
+process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FW_H", output_dir)
+process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FD_C", output_dir)
+process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FD_L_NH3", output_dir)
+process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FD_K_NH3_NOX", output_dir)
 
 process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FM_B",NULL, output_dir)
 
@@ -112,6 +113,9 @@ mapdata <- all_data_matrix[,,3,21]
 # Convertire i valori in milligrammi/m^2 * day
 mapdata <- mapdata * 10^6 * 60 * 60 * 24
 
+#ritaglia mapdata per la lombardia
+mapdata<-mapdata[10:82,125:222]
+
 # Create a data frame for plotting
 df <- melt(mapdata)
 
@@ -126,15 +130,19 @@ names(df) <- c("lon", "lat", "value")
 
 
 library(ggplot2)
+library(scales)  # Assicurati di avere questa libreria per la funzione 'rescale'
+
+# Definisci una palette di colori più estesa
+extended_colors <- c("darkblue", "blue", "cyan", "green", "yellow", "orange", "red", "darkred", "purple")
 
 ggplot(df, aes(x = lon, y = lat, fill = value)) +
-  geom_tile() +  
+  geom_tile(color = "black", size = 0.01) +  # Bordi neri estremamente sottili
   scale_fill_gradientn(
-    colors = c("blue", "cyan", "yellow", "orange", "red"),  # Definisce una scala di colori lunga
-    values = scales::rescale(c(0, 0.25, 0.5, 0.75, 1)),  # Distribuisce i colori lungo la scala
+    colors = extended_colors,  # Utilizza la palette di colori estesa
+    values = rescale(c(0, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8, 0.9, 1)),  # Scala più graduata per i colori
     name = "Emissions (mg/m² * Day)",
-    trans = "log10"  # Applica la scala logaritmica
-  ) + 
+    trans = "log10"
+  ) +
   coord_fixed(1.3) +
   theme_minimal() +
   theme(legend.position = "bottom") +
@@ -144,7 +152,8 @@ ggplot(df, aes(x = lon, y = lat, fill = value)) +
     y = "Latitudine"
   )
 
-
+# Salvare l'immagine ad alta risoluzione
+ggsave("NH3_Emissions_Italy_HighRes.png", dpi = 300, width = 10, height = 8)
 
 #voglio controllare se df2 e df sono uguali in value
 identical(df$value,df2$value)

@@ -56,7 +56,7 @@ save_monthly_profiles <- function(list_of_dfs, output_dir, profile_name) {
   saveRDS(monthly_matrix, file = file.path(output_dir, paste0(profile_name, "_monthly.rds")))
 }
 
-process_profile <- function(nc_file_path_daily_weekly, nc_file_path_monthly, profile_name, start_year, output_dir) {
+process_profile <- function(nc_file_path_daily_weekly, nc_file_path_monthly, profile_name, output_dir) {
   
   # Informazioni sui profili
   profile_info <- list(
@@ -118,7 +118,7 @@ process_profile <- function(nc_file_path_daily_weekly, nc_file_path_monthly, pro
   lat <- ncvar_get(nc, "latitude")
   
   # Bounding box index (impostare il confine manualmente)
-  boundary <- c(min(lon), max(lon), min(lat), max(lat)) # Aggiungi o modifica se necessario
+  
   lon_idx <- which(lon >= boundary[1] & lon <= boundary[2])
   lat_idx <- which(lat >= boundary[3] & lat <= boundary[4])
   
@@ -149,7 +149,7 @@ process_profile <- function(nc_file_path_daily_weekly, nc_file_path_monthly, pro
   
   # Gestire il profilo in base al tipo temporale
   if (profile_info[[profile_name]]$temporal_dim == "daily") {
-    save_daily_profiles_as_matrix(list_of_dfs, start_year, output_dir)
+    save_daily_profiles_as_matrix(list_of_dfs, 2000, output_dir)
   } else if (profile_info[[profile_name]]$temporal_dim == "weekly") {
     save_weekly_profiles(list_of_dfs, output_dir, profile_name)
   } else if (profile_info[[profile_name]]$temporal_dim == "monthly") {

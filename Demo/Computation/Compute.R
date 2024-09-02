@@ -2,16 +2,18 @@
 
 # Funzione per estrarre e salvare i profili temporali in file separati per anno
 
-profile<-readRDS(file.path("Demo\\Data", "FD_C_2020.rds"))
+profile<-readRDS(file.path("Demo\\Data\\Processed\\TEMPO_data", "FD_C_2020.rds"))
 yearData<-readRDS(file.path("Demo\\Data\\Processed\\ANT_data", "all_data_matrix.rds"))
 
-yearData[,,3,21]
-profile
-From_Daily_to_Daily<- function(yearData,profile,profile_name){
+ProfileMatrix<- FD_C_2000
+YearData<- REG_ANT_yearly_data[,,3,1]
+ComputedData<-NULL
+  for(i in 366){
+    
+    ComputedData[,,i]<-YearData*ProfileMatrix[,,i]
+    
   
-  daily_data<-yearData[,,3,21]*profile[,,1]
+  }
+
+  dimnames(ComputedData)<-dimnames(REG_ANT_yearly_data[,,3,1])
   
-  saveRDS(daily_data, file = file.path("Demo\\Data\\", paste0("Daily", 2020, ".rds")))
-  
-  
-}

@@ -16,8 +16,9 @@ save_daily_profiles_as_matrix <- function(list_of_dfs, start_year, output_dir) {
     
     for (day in 1:days_in_year) {
       df <- list_of_dfs[[indexFromYear + day - 1]]
-      day_matrix <- dcast(df, x ~ y, value.var = "value")
-      FD_C_matrix <- abind(FD_C_matrix, day_matrix, along = 3)
+      dcast_matrix <- dcast(df, x ~ y, value.var = "value")
+      value_matrix <- as.matrix(dcast_matrix[,-1])
+      FD_C_matrix <- abind(FD_C_matrix, value_matrix, along = 3)
     }
     
     saveRDS(FD_C_matrix, file = file.path(output_dir, paste0("FD_C_", year, ".rds")))
@@ -35,8 +36,9 @@ save_weekly_profiles <- function(list_of_dfs, output_dir, profile_name) {
   
   for (day in 1:7) {
     df <- list_of_dfs[[day]]
-    day_matrix <- dcast(df, x ~ y, value.var = "value")
-    week_matrix <- abind(week_matrix, day_matrix, along = 3)
+    dcast_matrix <- dcast(df, x ~ y, value.var = "value")
+    value_matrix <- as.matrix(dcast_matrix[,-1])
+    week_matrix <- abind(week_matrix, value_matrix, along = 3)
   }
   
   saveRDS(week_matrix, file = file.path(output_dir, paste0(profile_name, "_weekly.rds")))
@@ -49,8 +51,9 @@ save_monthly_profiles <- function(list_of_dfs, output_dir, profile_name) {
   
   for (month in 1:12) {
     df <- list_of_dfs[[month]]
-    month_matrix <- dcast(df, x ~ y, value.var = "value")
-    monthly_matrix <- abind(monthly_matrix, month_matrix, along = 3)
+    dcast_matrix <- dcast(df, x ~ y, value.var = "value")
+    value_matrix <- as.matrix(dcast_matrix[,-1])
+    monthly_matrix <- abind(monthly_matrix, value_matrix, along = 3)
   }
   
   saveRDS(monthly_matrix, file = file.path(output_dir, paste0(profile_name, "_monthly.rds")))

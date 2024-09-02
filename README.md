@@ -47,6 +47,12 @@ The GNFR (Gridded Nomenclature for Reporting) sectors categorize emissions by ac
 ## ⚙️ **Usage**
 The dataset can be used for environmental studies, policy development, and increasing public awareness. It offers comprehensive insights into temporal emission patterns.
 
+## 📊 **2020 NH3 Emissions in Italy**
+Here is the representation of the NH3 emissions in Italy for the year 2020. The map shows the spatial distribution of emissions, highlighting cells with higher concentrations.
+
+![NH3 Emissions in Italy 2020](NH3_Emissions_Italy_HighRes.png)
+
+
 ## 🙌 **Contributing**
 Contributions are welcome, such as:
 - 🛠️ Improving data extraction/transformation scripts.

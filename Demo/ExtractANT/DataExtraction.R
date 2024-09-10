@@ -145,3 +145,19 @@ build_yearly_matrix <- function(all_data_list) {
   
   return(all_data_matrix)
 }
+
+# Function to extract data from all sectors in a csv file
+extractAllSectorsCSV <- function(csv_file_path,pollutant,countryISO3) {
+
+  # Read the CSV file
+  data <- read.csv(csv_file_path, header = TRUE)
+  
+  #dammi le righe dove la colonna POLL è uguale a NH3 e la colonna ISO3 è uguale a ITA
+  
+  data<-data[data$ISO3==countryISO3,]
+  data<-data[data$POLL==pollutant,]
+  
+  return(data)
+  
+}
+

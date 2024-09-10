@@ -79,23 +79,13 @@ process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FD_K_NH3_NOX", 
 process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FM_B",NULL, output_dir)
 
 
-# Leggi un file CSV in un data frame
-dati <- read.csv("C:\\Users\\aminb\\Desktop\\IEDD\\Demo\\Data\\Raw\\CAMS-REG-TEMPO\\Simplified\\CAMS_TEMPO_v4_1_simplified_Monthly_Factors_climatology.csv")
 
-#leggi dati dove colonna ISO3 è uguale a ITA
-dati_ita<-subset(dati,ISO3=="ITA")
+#extract all monthly sectors from csv file
 
-#funzione generale per estrarre dati ISO3 uguale a ITA e colonna POLL con determinato polluente
-extract_from_monthly_simplified<-function(dati,pollutant)
-{
-  
-  dati_pollutant<-subset(dati,POLL==pollutant)
-  
-  return(dati_pollutant)
-}
+csv_file_path <- "C:\\Users\\aminb\\Desktop\\IEDD\\Demo\\Data\\Raw\\CAMS-REG-TEMPO\\Simplified\\CAMS_TEMPO_v4_1_simplified_Monthly_Factors_climatology.csv"
 
-#estrazione dati per il polluente NH3
-dati_ita_nh3<-extract_from_monthly_simplified(dati_ita,"NH3")
+nh3_monthly<-extractAllSectorsCSV(csv_file_path,"NH3","ITA")
+
 
 
 #plot map with geom_tile

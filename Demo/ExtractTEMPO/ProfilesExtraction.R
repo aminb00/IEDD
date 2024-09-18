@@ -6,7 +6,7 @@ source("Demo\\Utils.R")
 source("Demo\\Config.R")
 
 # Funzione per salvare i profili giornalieri in forma matriciale (3D) per anno
-save_daily_profiles_as_matrix <- function(list_of_dfs, start_year, output_dir) {
+save_daily_profiles_as_matrix <- function(list_of_dfs, start_year, output_dir,profile_name) {
   indexFromYear <- 1
   
   for (year in start_year:(start_year + length(list_of_dfs) / 365 - 1)) {
@@ -21,7 +21,7 @@ save_daily_profiles_as_matrix <- function(list_of_dfs, start_year, output_dir) {
       FD_C_matrix <- abind(FD_C_matrix, value_matrix, along = 3)
     }
     
-    saveRDS(FD_C_matrix, file = file.path(output_dir, paste0("FD_C_", year, ".rds")))
+    saveRDS(FD_C_matrix, file = file.path(output_dir, paste0(sector, year, ".rds")))
     
     rm(FD_C_matrix)
     gc()
@@ -152,7 +152,7 @@ process_profile <- function(nc_file_path_daily_weekly, nc_file_path_monthly, pro
   
   # Gestire il profilo in base al tipo temporale
   if (profile_info[[profile_name]]$temporal_dim == "daily") {
-    save_daily_profiles_as_matrix(list_of_dfs, 2000, output_dir)
+    save_daily_profiles_as_matrix(list_of_dfs, 2000, output_dir,profile_name)
   } else if (profile_info[[profile_name]]$temporal_dim == "weekly") {
     save_weekly_profiles(list_of_dfs, output_dir, profile_name)
   } else if (profile_info[[profile_name]]$temporal_dim == "monthly") {

@@ -82,10 +82,11 @@ process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FM_B",NULL, out
 
 #extract all monthly sectors from csv file
 
-csv_file_path <- "C:\\Users\\aminb\\Desktop\\IEDD\\Demo\\Data\\Raw\\CAMS-REG-TEMPO\\Simplified\\CAMS_TEMPO_v4_1_simplified_Monthly_Factors_climatology.csv"
+csvPath_MonthlySimplified <- "C:\\Users\\aminb\\Desktop\\IEDD\\Demo\\Data\\Raw\\CAMS-REG-TEMPO\\Simplified\\CAMS_TEMPO_v4_1_simplified_Monthly_Factors_climatology.csv"
+csvPath_WeeklySimplified <- "Demo/Data/Raw/CAMS-REG-TEMPO/Simplified/CAMS_TEMPO_v4_1_simplified_Weekly_Factors.csv"
 
 nh3_monthly<-extractAllSectorsCSV(csv_file_path,"NH3","ITA")
-
+nh3_weekly<-extractAllSectorsCSV(csvPath_WeeklySimplified,"NH3","ITA")
 
 
 #plot map with geom_tile

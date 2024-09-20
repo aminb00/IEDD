@@ -1,4 +1,6 @@
-# main.R
+# main.R #### 
+
+## packages ####
 
 library(ncdf4)
 library(abind)
@@ -7,7 +9,8 @@ library(abind)
 source("Demo/Utils.R")
 source("Demo/Config.R")
 
-# Source the DataExtraction script to load the necessary functions
+
+## CAMS-REG-ANT DataExtraction  ####
 source("Demo/ExtractANT/DataExtraction.R")
 
 # Initialize a list to store all data
@@ -56,9 +59,8 @@ plot(time_series, type="l", col="blue", xlab="Time", ylab="NH3 (mg/m^2/day)", ma
 
 
 
-########################################################################################
 
-#CAMS-REG-TEMPO
+## CAMS-REG-TEMPO ####
 
 source("Demo/ExtractTEMPO/ProfilesExtraction.R")
 
@@ -73,10 +75,9 @@ output_dir <- "Demo\\Data\\Processed\\TEMPO_data"
 process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FW_F", output_dir)
 process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FW_H", output_dir)
 process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FD_C", output_dir)
-process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FD_L_NH3", output_dir)
-process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FD_K_NH3_NOX", output_dir)
-
-process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FM_B",NULL, output_dir)
+process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FD_L_nh3", output_dir)
+process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FD_K_nh3_nox", output_dir)
+process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FM_F", output_dir)
 
 
 
@@ -85,11 +86,55 @@ process_profile(nc_file_path_daily_weekly,nc_file_path_monthly, "FM_B",NULL, out
 csvPath_MonthlySimplified <- "C:\\Users\\aminb\\Desktop\\IEDD\\Demo\\Data\\Raw\\CAMS-REG-TEMPO\\Simplified\\CAMS_TEMPO_v4_1_simplified_Monthly_Factors_climatology.csv"
 csvPath_WeeklySimplified <- "Demo/Data/Raw/CAMS-REG-TEMPO/Simplified/CAMS_TEMPO_v4_1_simplified_Weekly_Factors.csv"
 
-nh3_monthly<-extractAllSectorsCSV(csv_file_path,"NH3","ITA")
+nh3_monthly<-extractAllSectorsCSV(csvPath_MonthlySimplified,"NH3","ITA")
 nh3_weekly<-extractAllSectorsCSV(csvPath_WeeklySimplified,"NH3","ITA")
 
+extractAllSectorsCSV<-function(csv_file_path,poll,country){
+  # Read the CSV file
+  data <- read.csv(csv_file_path, header = TRUE)
+  
+  # Filter the data based on the species and country
+  data <- data[data$POLL == poll & data$ISO3 == country, ]
+  
+  # Remove the Species and Country columns
+  data <- data[, -c(1, 2)]
+  
+  return(data)
+}
 
-#plot map with geom_tile
+## Computation ####
+
+### dailyProfile ####
+
+source("Demo/Computation/CreateDailyProfile.R")
+# Specifica i profili mensile e settimanale
+F_profiles <- list(FM_F_monthly, FW_F_weekly,"F")
+
+start_year <- 2000
+end_year <- 2020
+output_folder <- "Demo/Data/Processed/TEMPO_data/Daily_profiles"
+
+# Genera e salva i profili giornalieri per l'intervallo di anni
+create_DailyProfile(F_profiles, start_year, end_year, output_folder)
+
+
+### Daily DATA ####
+#Compute daily profile with Yearly to get Daily_DATA
+
+source("Demo/Computation/Compute.R")
+
+# Esempio di utilizzo della funzione
+yearly_data_file <- "Demo/Data/Processed/ANT_data/REG_ANT_yearly_data.rds"
+temporal_profile_folder <- "Demo/Data/Processed/TEMPO_data"
+output_folder <- "Demo/Data/Processed/DAILY_data"
+
+profile<- "FD_C"
+calculate_daily_matrices(profile,yearly_data_file, temporal_profile_folder, output_folder)
+
+
+
+
+## map plotting ####
 
 library(ggplot2)
 library(reshape2)
@@ -154,3 +199,5 @@ df$lat==df2$lat
 identical(df,df2)
 class(df$lon)
 class(df2$lon)
+
+

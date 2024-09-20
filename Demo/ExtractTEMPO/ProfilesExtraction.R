@@ -136,6 +136,7 @@ process_profile <- function(nc_file_path_daily_weekly, nc_file_path_monthly, pro
   
   list_of_dfs <- vector("list", num_periods)
   
+  #Using for cycle instead of 1:num_periods for memory allocation
   for (period_index in 1:num_periods) {
     start_idx <- c(min(lon_idx), min(lat_idx), period_index)
     count_idx <- c(length(lon_idx), length(lat_idx), 1)

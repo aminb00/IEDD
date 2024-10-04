@@ -52,6 +52,24 @@ Here is the representation of the NH3 emissions in Italy for the year 2020. The 
 
 ![NH3 Emissions in Italy 2020](NH3_Emissions_Italy_HighRes.png)
 
+## 📊 **Interactive Map of Italy's Municipalities**
+
+Here is an interactive map of Italy, with its municipalities:
+
+<div id="map" style="height: 600px;"></div>
+<script>
+    var map = L.map('map').setView([41.9028, 12.4964], 5); // Center the map on Italy
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add GeoJSON layer for Italy's municipalities
+    var geojsonLayer = new L.GeoJSON.AJAX("path_to_your_geojson_file.geojson"); // Add your own GeoJSON file path here
+    geojsonLayer.addTo(map);
+</script>
+
 
 ## 🙌 **Contributing**
 Contributions are welcome, such as:

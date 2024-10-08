@@ -93,7 +93,7 @@ Below, you can see the two types of spatial resolutions that we will be using in
 ![Grid Cell Map](NH3_Emissions_Italy_HighRes.png)
 
 ### Municipality Data:
-![Municipality Map](path_to_your_municipality_image)
+![Municipality Map](ITA-Municipalities-MAP.png)
 
 
 ## 🙌 **Contributing**

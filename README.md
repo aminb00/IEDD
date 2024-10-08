@@ -91,14 +91,15 @@ Below, you can see the two types of spatial resolutions that we will be using in
 
 <div style="display: flex; justify-content: space-around;">
     <div style="text-align: center;">
-        <img src="2020NH3emissionsITALY.png" alt="Grid Cell Map" style="width: 45%;">
+        <img src="2020NH3emissionsITALY.png" alt="Grid Cell Map" style="width: 70%;">
         <p>Grid Cell Data</p> 
     </div>
    <div style="text-align: center;">
-        <img src="ITA-Municipalities-MAP.png" alt="Municipality Map" style="width: 45%;">
+        <img src="ITA-Municipalities-MAP.png" alt="Municipality Map" style="width: 70%;">
         <p>Municipality Data</p>
     </div>
 </div>
+
 
 ## 🙌 **Contributing**
 Contributions are welcome, such as:

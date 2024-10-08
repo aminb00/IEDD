@@ -95,7 +95,7 @@ Below, you can see the two types of spatial resolutions that we will be using in
         <p>Grid Cell Data</p> 
     </div>
    <div style="text-align: center;">
-        <img src="ITA-Municipalities-MAP" alt="Municipality Map" style="width: 45%;">
+        <img src="ITA-Municipalities-MAP.png" alt="Municipality Map" style="width: 45%;">
         <p>Municipality Data</p>
     </div>
 </div>

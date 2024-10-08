@@ -89,11 +89,34 @@ In this project, we will perform a **change of support** by transitioning data f
 
 Below, you can see the two types of spatial resolutions that we will be using in the transformation:
 
-### Grid Cell Data:
-![Grid Cell Map](NH3_Emissions_Italy_HighRes.png)
+<div style="display: flex; justify-content: space-around;">
+    <div style="text-align: center;">
+        <img src="## 🔄 **Change of Support**
 
-### Municipality Data:
-![Municipality Map](ITA-Municipalities-MAP.png)
+The concept of **Change of Support** involves transforming data from one spatial resolution or support (such as a grid of cells) to another (such as administrative boundaries like municipalities). This process is essential when trying to associate gridded data (such as emissions or pollution data) with specific geographic regions that are used in administrative or policy-making contexts.
+
+In this project, we will perform a **change of support** by transitioning data from grid cells (with a resolution of 0.05° x 0.1°) to the boundaries of Italian municipalities. This will allow us to analyze and visualize emissions at a local level, directly linked to municipalities, rather than using arbitrary grid cells.
+
+Below, you can see the two types of spatial resolutions that we will be using in the transformation:
+
+<div style="display: flex; justify-content: space-around;">
+    <div style="text-align: center;">
+        <img src="2020NH3emissionsITALY.png" alt="Grid Cell Map" style="width: 45%;">
+        <p>Grid Cell Data</p>
+    </div>
+    <div style="text-align: center;">
+        <img src="ITA-Municipalities-MAP" alt="Municipality Map" style="width: 45%;">
+        <p>Municipality Data</p>
+    </div>
+</div>
+" alt="Grid Cell Map" style="width: 45%;">
+        <p>Grid Cell Data</p>
+    </div>
+    <div style="text-align: center;">
+        <img src="path_to_your_municipality_image" alt="Municipality Map" style="width: 45%;">
+        <p>Municipality Data</p>
+    </div>
+</div>
 
 
 ## 🙌 **Contributing**

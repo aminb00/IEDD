@@ -81,6 +81,20 @@ The following table provides an overview of the main characteristics of the CAMS
 
 Source: CAMS261_2022SC1 – Product documentation.
 
+## 🔄 **Change of Support**
+
+The concept of **Change of Support** involves transforming data from one spatial resolution or support (such as a grid of cells) to another (such as administrative boundaries like municipalities). This process is essential when trying to associate gridded data (such as emissions or pollution data) with specific geographic regions that are used in administrative or policy-making contexts.
+
+In this project, we will perform a **change of support** by transitioning data from grid cells (with a resolution of 0.05° x 0.1°) to the boundaries of Italian municipalities. This will allow us to analyze and visualize emissions at a local level, directly linked to municipalities, rather than using arbitrary grid cells.
+
+Below, you can see the two types of spatial resolutions that we will be using in the transformation:
+
+### Grid Cell Data:
+![Grid Cell Map](NH3_Emissions_Italy_HighRes.png)
+
+### Municipality Data:
+![Municipality Map](path_to_your_municipality_image)
+
 
 ## 🙌 **Contributing**
 Contributions are welcome, such as:

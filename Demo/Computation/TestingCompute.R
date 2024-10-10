@@ -1,4 +1,4 @@
-calculate_from_FD <- function(PollutantName, profile,
+calculate_daily_matrices <- function(PollutantName, profile,
                                      yearly_data_file, temporal_profile_folder,
                                      output_folder) 
 {
@@ -20,7 +20,7 @@ calculate_from_FD <- function(PollutantName, profile,
   start_year <- 2000
   
   for (year in start_year:(start_year+num_years)) {
-    
+  
     # Cerca i file che iniziano con FD_, settore, anno e ignora tutto ciò che segue l'anno
     matching_file <- Sys.glob(file.path(temporal_profile_folder, paste0("FD_",sector_letter,"_",year, "*")))
     
@@ -46,6 +46,6 @@ calculate_from_FD <- function(PollutantName, profile,
     
   }
   
-  
-}
 
+}
+    

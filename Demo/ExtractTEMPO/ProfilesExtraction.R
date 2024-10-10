@@ -12,18 +12,23 @@ save_daily_profiles_as_matrix <- function(list_of_dfs, start_year, output_dir,pr
   for (year in start_year:(start_year + length(list_of_dfs) / 365 - 1)) {
     days_in_year <- if (year %% 4 == 0) 366 else 365
     
-    FD_C_matrix <- NULL
+    FD_matrix <- NULL
     
     for (day in 1:days_in_year) {
       df <- list_of_dfs[[indexFromYear + day - 1]]
       dcast_matrix <- dcast(df, x ~ y, value.var = "value")
       value_matrix <- as.matrix(dcast_matrix[,-1])
-      FD_C_matrix <- abind(FD_C_matrix, value_matrix, along = 3)
+      FD_matrix <- abind(FD_matrix, value_matrix, along = 3)
     }
     
-    saveRDS(FD_C_matrix, file = file.path(output_dir, paste0(sector, year, ".rds")))
+    # Insert the year right after the sector letter
+    file_name <- sub("(FD_[A-Z])", paste0("\\1_", year), profile_name)
     
-    rm(FD_C_matrix)
+    # Save the file
+    saveRDS(FD_matrix, file = file.path(output_dir, paste0(file_name, ".rds")))
+    
+    
+    rm(FD_matrix)
     gc()
     
     indexFromYear <- indexFromYear + days_in_year

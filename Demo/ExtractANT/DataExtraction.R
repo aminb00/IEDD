@@ -10,7 +10,7 @@ source("Demo/Config.R")
 # Function to extract data from all sectors in a NetCDF file
 extractAllSectors <- function(nc_file_path) {
   # Load the lon, lat, lon_idx, lat_idx from RDS if available
-  lon_lat_data <- readRDS("Demo/Data/Processed/ANT_data/lon_lat_idx.rds")
+  lon_lat_data <- readRDS("Demo/Data/Processed/lon_lat_idx.rds")
   
   # Open the NetCDF file
   nc <- open_nc_file(nc_file_path)
@@ -20,21 +20,7 @@ extractAllSectors <- function(nc_file_path) {
   lat_idx <- lon_lat_data$lat_idx
   
   # List of sector names corresponding to the variables in the NetCDF file
-  sector_names <- list(
-    A = "A_PublicPower",
-    B = "B_Industry",
-    C = "C_OtherStationaryComb",
-    D = "D_Fugitives",
-    E = "E_Solvents",
-    F = "F_RoadTransport",
-    G = "G_Shipping",
-    H = "H_Aviation",
-    I = "I_OffRoad",
-    J = "J_Waste",
-    K = "K_AgriLivestock",
-    L = "L_AgriOther",
-    S = "SumAllSectors"
-  )
+  
   
   # Initialize list to store data for each sector
   sector_data <- list()
@@ -108,7 +94,7 @@ add_new_years_data <- function(nc_file_path, all_years_data) {
 }
 
 # Function to build the yearly 4D matrix from the list of all years
-build_yearly_matrix <- function(all_data_list) {
+build_yearly_matrix <- function(all_data_list, lon_lat_idx) {
   all_data_matrix <- NULL
   
   for (year in 1:length(all_data_list)) {
@@ -137,14 +123,13 @@ build_yearly_matrix <- function(all_data_list) {
   dimnames(all_data_matrix) <- list(
     x = lon_rounded,  # Rounded longitude coordinates
     y = lat_rounded,  # Rounded latitude coordinates
-    sector = names(all_data_list$`Year 2000`),  # Sectors (e.g., climate variables)
+    sector = names(sector_names),  # Sectors (e.g., climate variables)
     year = names(all_data_list)  # Years (e.g., 2000, 2001, etc.)
   )
   
-  
-  
   return(all_data_matrix)
 }
+
 
 # Function to extract data from all sectors in a csv file
 extractAllSectorsCSV <- function(csv_file_path,pollutant,countryISO3) {

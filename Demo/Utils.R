@@ -42,3 +42,19 @@ get_lon_lat_indices <- function(nc_file_path, boundary) {
   # Return the extracted data
   return(list(lon = lon, lat = lat, lon_idx = lon_idx, lat_idx = lat_idx))
 }
+
+sector_names <- list(
+  A = "A_PublicPower",
+  B = "B_Industry",
+  C = "C_OtherStationaryComb",
+  D = "D_Fugitives",
+  E = "E_Solvents",
+  F = "F_RoadTransport",
+  G = "G_Shipping",
+  H = "H_Aviation",
+  I = "I_OffRoad",
+  J = "J_Waste",
+  K = "K_AgriLivestock",
+  L = "L_AgriOther",
+  S = "SumAllSectors"
+)

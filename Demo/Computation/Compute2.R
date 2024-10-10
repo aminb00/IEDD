@@ -10,12 +10,11 @@ calculate_daily_matrices <- function(yearly_data_file, temporal_profile_file, ou
   # Estrarre il numero di anni dalla dimensione della matrice annuale
   num_years <- dim(yearly_data)[4]
   
-  # Mappa i settori alla dimensione della matrice
-  sector_index <- match(sector, colnames(profile_matrix))
+  sector_index<-3
   
-  if (is.na(sector_index) || sector_index > dim(yearly_data)[3]) {
-    stop("Il settore selezionato non esiste nei dati.")
-  }
+  #if (is.na(sector_index) || sector_index > dim(yearly_data)[3]) {
+  #  stop("Il settore selezionato non esiste nei dati.")
+  #}
   
   # Loop attraverso gli anni
   start_year <- 2000
@@ -44,7 +43,7 @@ calculate_daily_matrices <- function(yearly_data_file, temporal_profile_file, ou
 
 # Esempio di utilizzo:
 yearly_data_file <- "Demo/Data/Processed/ANT_data/REG_ANT_yearly_data.rds"
-temporal_profile_file <- "Demo/Data/Processed/profile_matrix_2000.rds"
+temporal_profile_file <- "Demo/Data/Processed/TEMPO_data/FD_C2000.rds"
 output_folder <- "Demo/Data/Processed/DAILY_data"
 sector <- "C"
 calculate_daily_matrices(yearly_data_file, temporal_profile_file, output_folder, sector)

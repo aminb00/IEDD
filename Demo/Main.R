@@ -68,6 +68,7 @@ nc_file_path_monthly <- "Demo/Data/Raw/CAMS-REG-TEMPO/CAMS-REG-TEMPO_EUR_0.1x0.1
 output_dir <- "Demo/Data/Processed/TEMPO_data"
 
 #Process Profiles
+process_profile(nc_file_path_daily_weekly, nc_file_path_monthly, "FM_F", output_dir)
 process_profile(nc_file_path_daily_weekly, nc_file_path_monthly, "FW_F", output_dir)
 process_profile(nc_file_path_daily_weekly, nc_file_path_monthly, "FW_H", output_dir)
 process_profile(nc_file_path_daily_weekly, nc_file_path_monthly, "FD_C", output_dir)
@@ -95,17 +96,18 @@ SimpleProfilesCreation(Path_simplifiedProfilesCSV,"CO2")
 
 ## 5. CAMS-REG-TEMPO PROFILE CREATION using FM and FW ####
 
-source("Demo/Computation/CreateDailyProfile.R")
+source("Demo/ExtractTEMPO/ProfilesCreation.R")
 
-# Define profiles and parameters
-F_profiles <- list(FM_F_monthly, FW_F_weekly, "F")
-start_year <- 2000
-end_year <- 2020
-output_folder <- "Demo/Data/Processed/TEMPO_data/Daily_profiles"
+start_year<-2000
+end_year<-2020
 
-# Generate and save daily profiles for the specified years
-create_DailyProfile(F_profiles, start_year, end_year, output_folder)
-
+#F profile
+# Define the paths to the FM and FW profiles
+FM_profile <- readRDS("Demo/Data/Processed/TEMPO_data/FM_F_monthly.rds")
+FW_profile <- readRDS("Demo/Data/Processed/TEMPO_data/FW_F_weekly.rds")
+#manca start e end year
+DailyPRF_fromFMFW <- function(FM_profile, FW_profile, sector,start_year,end_year) 
+  
 #Create Simplified Daily Profile 
 source("Demo/Computation/CreateSIMPLEdailyProfile.R")
 
@@ -124,21 +126,56 @@ create_multidimensional_profile_for_years(years_interval[1], years_interval[2],
 ## 6. COMPUTE DAILY DATA WITH FD profiles ####
 source("Demo/Computation/Compute.R")
 
-# Example of using the compute function
-yearly_data_file <- "Demo/Data/Processed/ANT_data/REG_ANT_yearly_data.rds"
+# Esempio di utilizzo della funzione aggiornata
 temporal_profile_folder <- "Demo/Data/Processed/TEMPO_data"
 output_folder <- "Demo/Data/Processed/DAILY_data"
-PollutantName <- "NH3"
-profile <- "FD_C"
+PollutantName <- "nh3"
+sector <- "F"  
+calculate_from_FD(PollutantName, yearly_data_file, temporal_profile_folder, output_folder, sector)
 
-# Calculate daily matrices
-calculate_from_FD(PollutantName, profile, yearly_data_file, temporal_profile_folder, output_folder)
+PollutantName <- "nox"
+sector <- "F"  
+calculate_from_FD(PollutantName, yearly_data_file, temporal_profile_folder, output_folder, sector)
+
+
+PollutantName <- "so2"
+sector <- "F"  
+calculate_from_FD(PollutantName, yearly_data_file, temporal_profile_folder, output_folder, sector)
+
+PollutantName <- "pm10"
+sector <- "F"  
+calculate_from_FD(PollutantName, yearly_data_file, temporal_profile_folder, output_folder, sector)
+
+PollutantName <- "pm2_5"
+sector <- "F"  
+calculate_from_FD(PollutantName, yearly_data_file, temporal_profile_folder, output_folder, sector)
+
+PollutantName <- "nmvoc"
+sector <- "F"  
+calculate_from_FD(PollutantName, yearly_data_file, temporal_profile_folder, output_folder, sector)
+
+PollutantName <- "co"
+sector <- "F"  
+calculate_from_FD(PollutantName, yearly_data_file, temporal_profile_folder, output_folder, sector)
+
+PollutantName <- "ch4"
+sector <- "F"  
+calculate_from_FD(PollutantName, yearly_data_file, temporal_profile_folder, output_folder, sector)
+
+PollutantName <- "co2_ff"
+sector <- "F"  
+calculate_from_FD(PollutantName, yearly_data_file, temporal_profile_folder, output_folder, sector)
+
+PollutantName <- "co2_bf"
+sector <- "F"  
+calculate_from_FD(PollutantName, yearly_data_file, temporal_profile_folder, output_folder, sector)
+
 
 ## 7. COMPUTE DAILY DATA WITH SIMPLIFIED PROFILES####
 source("Demo/Computation/ComputeSimple.R")
 
 # Define the range of years
-start_year <- 2018
+start_year <- 2000
 end_year <- 2020
 
 #NH3
@@ -166,216 +203,9 @@ yearlyData <- readRDS("Demo/Data/Processed/ANT_data/REG_ANT_yearly_data_so2.rds"
 DailyDataFromSimplified(yearlyData, start_year, end_year, "SOx")
 
 
-## 8. TESTING EXTRACTED DAILY DATA ####
-mapdata<-D_K_2016[,,1]
 
-df <- melt(mapdata)
-lon_lat_idx <- readRDS("Demo/Data/Processed/ANT_data/lon_lat_idx.rds")
-df <- expand.grid(lon = lon_lat_idx$lon[lon_lat_idx$lon_idx], lat = lon_lat_idx$lat[lon_lat_idx$lat_idx])
-df$value <- as.vector(mapdata)
-
-# Define an extended color palette
-extended_colors <- c("darkblue", "blue", "cyan", "green", "yellow", "orange", "red", "darkred", "purple")
-
-# Plot using ggplot
-ggplot(df, aes(x = lon, y = lat, fill = value)) +
-  geom_tile(color = "black",size=0.01) +  # Thin black borders
-  scale_fill_gradientn(
-    colors = extended_colors,
-    values = rescale(c(0, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8, 0.9, 1)),  # Custom color scaling
-    name = "Emissions (mg/m² * Day)",
-    trans = "log10"
-  ) +
-  coord_fixed(1.3) +
-  theme_minimal() +
-  theme(legend.position = "bottom") +
-  labs(
-    title = "2020 NH3 Emissions in Italy",
-    x = "Longitude",
-    y = "Latitude"
-  )
+## 8.impila i dati giornalieri per anni in un unica matrice
 
 
-
-## 9. PLOT TIME SERIES AND MAPS ####
-
-# Load processed data matrix
-all_data_matrix <- readRDS("Demo/Data/Processed/ANT_data/REG_ANT_yearly_data.rds")
-
-# Extract time series data
-time_series <- sapply(1:dim(all_data_matrix)[4], function(i) {
-  all_data_matrix[35, 200, 3, i]  # Example indices
-})
-
-# Convert values to milligrams per square meter per day
-time_series <- time_series * 10^6 * 60 * 60 * 24
-
-# Plot the time series
-plot(time_series, type="l", col="blue", xlab="Time", ylab="NH3 (mg/m^2/day)", main="NH3 Time Series")
-
-#Map Plotting
-# Extract map data of a specific sector and year
-mapdata <- all_data_matrix[,,3,21]
-
-# Convert values to milligrams per square meter per day
-mapdata <- mapdata * 10^6 * 60 * 60 * 24
-
-# Crop data for Lombardy region
-mapdata <- mapdata[10:82, 125:222]
-
-# Create a data frame for plotting
-df <- melt(mapdata)
-lon_lat_idx <- readRDS("Demo/Data/Processed/ANT_data/lon_lat_idx.rds")
-df <- expand.grid(x = lon_lat_idx$lon[lon_lat_idx$lon_idx], y = lon_lat_idx$lat[lon_lat_idx$lat_idx])
-df$value <- as.vector(mapdata)
-
-# Define an extended color palette
-extended_colors <- c("darkblue", "blue", "cyan", "green", "yellow", "orange", "red", "darkred", "purple")
-
-# Plot using ggplot
-ggplot(df, aes(x = lon, y = lat, fill = value)) +
-  geom_tile(color = "black", size = 0.01) +  # Thin black borders
-  scale_fill_gradientn(
-    colors = extended_colors,
-    values = rescale(c(0, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8, 0.9, 1)),  # Custom color scaling
-    name = "Emissions (mg/m² * Day)",
-    trans = "log10"
-  ) +
-  coord_fixed(1.3) +
-  theme_minimal() +
-  theme(legend.position = "bottom") +
-  labs(
-    title = "2020 NH3 Emissions in Italy",
-    x = "Longitude",
-    y = "Latitude"
-  )
-
-# Save high-resolution plot
-ggsave("NH3_Emissions_Italy_HighRes.png", dpi = 300, width = 10, height = 8)
-
-## 10. DATA DESCRIPTION AND VALIDATION ####
-
-#Compare Data Frames
-# Checking if df and df2 are identical in values
-df2 <- all_data_list$`Year 2000`$C
-identical(df$value, df2$value)  # Check if values match
-identical(df, df2)              # Check if entire data frames match
-
-#Summary of Yearly Data 
-
-# Summary statistics for each sector
-for (i in 1:13) {
-  print(paste("Sector:", i))
-  print(summary(REG_ANT_yearly_data[,,i,]))
-}
-
-## 11. AGRIMONIA DATASET ####
-
-# Load Agrimonia dataset
-agrimonia_data <- read.csv("Demo/Data/Raw/AGRIMONIA/AGC_Dataset_v_3_0_0.csv")
-
-# Display the structure of the dataset
-str(agrimonia_data)
-
-#Want just colums latitude longitude
-
-agrimonia<-agrimonia_data[agrimonia_data$Latitude,agrimonia_data$Longitude]
-agrimonia_data$EM_nh3_agr_soils
-
-agrimonia_data$time <- as.Date(agrimonia_data$time, format="%d/%m/%Y")  # Modifica il formato se necessario
-
-agrimonia_filtered <- agrimonia_data[
-  agrimonia_data$Latitude >= 45.10 &
-    agrimonia_data$Latitude <= 45.50 &
-    agrimonia_data$Longitude >= 10.25 &
-    agrimonia_data$Longitude <=10.40  &
-    agrimonia_data$Time == "2016-01-01", #& agrimonia_data$Time <= "2016-12-31",
-  c("Latitude", "Longitude", "Time", "EM_nh3_sum", "EM_nh3_livestock_mm", "EM_nh3_agr_soils", "EM_nh3_agr_waste_burn")
-]
-
-
-
-## 12. OpenStreetMap ####
-
-#apriamo mappa geojson
-
-library(sf)
-library(dplyr)
-
-# Crea un oggetto sf per le emissioni
-emissioni_sf <- st_as_sf(emissioni_df, coords = c("lon", "lat"), crs = 4326)
-
-emissioni_matrix<-Daily_K_2016_NH3[,,1]*10^6*60*60*24
-# Estrai i nomi di riga e colonna (coordinate lat/lon)
-longitudes <- as.numeric(rownames(emissioni_matrix))
-latitudes <- as.numeric(colnames(emissioni_matrix))
-
-# Crea un dataframe con le emissioni e le coordinate
-emissioni_df <- expand.grid(lat = latitudes, lon = longitudes)
-emissioni_df$emissioni <- as.vector(emissioni_matrix)
-
-# Crea un oggetto sf dalle coordinate
-emissioni_sf <- st_as_sf(emissioni_df, coords = c("lon", "lat"), crs = 4326)
-
-# Carica i dati dei confini comunali (supponendo che siano in un file GeoJSON)
-comuni <- st_read("C:\\Users\\aminb\\Desktop\\comuniOSM")
-
-# Effettua la join spaziale
-emissioni_comuni <- st_join(emissioni_sf, comuni)
-
-# Aggrega le emissioni per comune
-emissioni_per_comune <- emissioni_comuni %>%
-  group_by(name) %>%
-  summarise(emissioni_totali = sum(emissioni, na.rm = TRUE))
-
-library(ggplot2)
-# Visualizza le emissioni su una mappa
-ggplot(emissioni_per_comune) +
-  geom_sf(aes(fill = emissioni_totali)) +
-  scale_fill_viridis_c() +
-  theme_minimal() +
-  labs(title = "Emissioni per Comune in Italia", fill = "Emissioni Totali")
-
-library(tmap)
-
-tmap_mode("view")
-
-tm_shape(comuni) +
-  tm_polygons() +
-  tm_shape(emissioni_per_comune) +
-  tm_bubbles(size = "emissioni_totali", col = "emissioni_totali", palette = "viridis")
-
-
-
-## 13. Plot Time series ####
-
-#Plotting ####
-
-# Plot delle emissioni giornaliere
-plot(sumNH3Converted[37,197,], type = "l", main = "Emissioni Giornaliere NH3", 
-     xlab = "Giorno dell'anno", ylab = "Emissioni NH3", col = "blue")
-
-# Boxplot delle emissioni
-boxplot(sumNH3Converted[37,197,], main = "Distribuzione delle Emissioni NH3", 
-        ylab = "Emissioni NH3", col = "lightblue")
-
-# Istogramma delle emissioni
-hist(sumNH3Converted[37,197,], breaks = 20, main = "Istogramma delle Emissioni NH3", 
-     xlab = "Emissioni NH3", col = "lightgreen")
-
-# Descrizione Statistica
-summary_stats <- summary(sumNH3Converted[37,197,])
-std_dev <- sd(sumNH3Converted[37,197,])
-
-# Stampa dei risultati
-print(summary_stats)
-print(paste("Deviazione standard: ", std_dev))
-
-mean_from_daily<-mean(sumNH3Converted[37,197,])
-yearly_data<-REG_ANT_yearly_data_nh3[37,197,13,17]*converting
-comparison_df <- data.frame(
-  mean_from_daily = mean_from_daily,
-  yearly_data=yearly_data  # Assicurati che sia un vettore
-)
 
 

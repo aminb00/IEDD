@@ -12,9 +12,6 @@ The IEDD project aims to build a comprehensive dataset representing daily emissi
 - **CAMS-REG-TEMPO**: 🗓️ This dataset provides temporal profiles that disaggregate annual emissions into finer resolutions (monthly, daily, weekly, hourly). It uses socio-economic, meteorological, and statistical data to model variations across sectors, improving emissions modeling across Europe. For more information, see the [publication](https://essd.copernicus.org/articles/13/367/2021/).
 
 
-- **CAMS-REG-TEMPO**: 🗓️ This dataset provides temporal profiles that disaggregate annual emissions into finer resolutions (monthly, daily, weekly, hourly). It uses socio-economic, meteorological, and statistical data to model variations across sectors, improving emissions modeling across Europe. For more information, see the [publication](https://essd.copernicus.org/articles/13/367/2021/).
-
-
 ## 📑 **GNFR Sectors**
 The GNFR (Gridded Nomenclature for Reporting) sectors categorize emissions by activity:
 
@@ -51,14 +48,6 @@ The GNFR (Gridded Nomenclature for Reporting) sectors categorize emissions by ac
 - 📝 `Config`: Configuration file for setting parameters and environment variables.
 - 📝 `Utils`: Utility functions and helper scripts for various tasks.
 - 📝 `Main`: Main script to orchestrate the data processing workflow.
-
-## 🏆 **Potential Applications**
-- **Environmental Impact Assessments**: 🌿 Analyze daily emissions impacts on local/regional environments.
-- **Policy Formulation**: 🏛️ Support policymakers in drafting environmental regulations.
-- **Public Awareness**: 📢 Increase public awareness of emissions at the municipality level.
-
-## ⚙️ **Usage**
-The dataset can be used for environmental studies, policy development, and increasing public awareness. It offers comprehensive insights into temporal emission patterns.
 
 ## 📊 **2020 NH3 Emissions in Italy**
 Here is the representation of the NH3 emissions in Italy for the year 2020. The map shows the spatial distribution of emissions, highlighting cells with higher concentrations.
@@ -112,6 +101,9 @@ Below, you can see the two types of spatial resolutions that we will be using in
         <p>Municipality Data</p>
     </div>
 </div>
+
+## 🏆 **Potential Applications and Usage**
+The Italian Emissions Daily Dataset (IEDD) provides versatile applications across environmental, economic, and policy domains. It enables detailed **environmental impact assessments** by highlighting daily emission patterns, identifying pollution hotspots, and assessing seasonal or regional trends. Policymakers can utilize this data to design effective regulations, correlating emissions with **socio-economic factors** such as GDP, industrial activity, or traffic data, thereby creating more targeted interventions. Additionally, it facilitates **economic analyses**, comparing emissions per capita or per GDP unit, which supports sustainable growth initiatives. Lastly, the dataset can enhance **public awareness** by linking emissions to everyday activities, fostering a deeper understanding of local environmental challenges. This comprehensive, high-resolution dataset is ideal for academic research, policy-making, economic planning, and public education, driving data-informed decisions toward sustainability.
 
 
 ## 🙌 **Contributing**

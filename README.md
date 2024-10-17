@@ -5,7 +5,12 @@ The IEDD project aims to build a comprehensive dataset representing daily emissi
 ### 🔍 **Background**
 - **CAMS-REG-ANT**: 🌐 Annual emissions data covering key pollutants across Europe, including **NOx**, **SO2**, **NH3**, **CO**, **PM10**, **PM2.5**, **CH4**, **NMVOCs**, and **CO2**. The spatial resolution is **0.05° x 0.1°**. This dataset uses a "top-down" approach, starting from official national inventories and distributing emissions over a spatial grid using auxiliary data (like population density and industrial activity). This ensures consistency with reported data, aiding air quality modeling and policy support. For more details, refer to the [publication](https://essd.copernicus.org/articles/14/491/2022/).
 
-![CAMS-REG-ANT Data Flow](regANT-image1.png)
+<div style="text-align: center;">
+    <img src="regANT-image1.png" alt="CAMS-REG-ANT construction">
+</div>
+
+- **CAMS-REG-TEMPO**: 🗓️ This dataset provides temporal profiles that disaggregate annual emissions into finer resolutions (monthly, daily, weekly, hourly). It uses socio-economic, meteorological, and statistical data to model variations across sectors, improving emissions modeling across Europe. For more information, see the [publication](https://essd.copernicus.org/articles/13/367/2021/).
+
 
 - **CAMS-REG-TEMPO**: 🗓️ This dataset provides temporal profiles that disaggregate annual emissions into finer resolutions (monthly, daily, weekly, hourly). It uses socio-economic, meteorological, and statistical data to model variations across sectors, improving emissions modeling across Europe. For more information, see the [publication](https://essd.copernicus.org/articles/13/367/2021/).
 

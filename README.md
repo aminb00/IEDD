@@ -4,17 +4,11 @@
 The IEDD project aims to build a comprehensive dataset representing daily emissions in Italian municipalities. The dataset leverages detailed data from the CAMS-REG-ANT datasets and employs CAMS-REG-TEMPO weight factors for accurate temporal distribution.
 
 ### 🔍 **Background**
-- **CAMS-REG-ANT**: 🌐 Annual emissions data covering key pollutants across Europe, such as **NOx, SO2, NH3, CO, PM10, PM2.5, CH4, NMVOCs,** and **CO2**. The spatial resolution is **0.05° x 0.1°**.
-  
-- **CAMS-REG-TEMPO**: 🗓️ Temporal profiles providing gridded monthly, daily, weekly, and hourly weight factors. These help distribute CAMS-REG-ANT data to offer a more granular temporal view, essential for accurate emissions modeling.
+- **CAMS-REG-ANT**: 🌐 Annual emissions data covering key pollutants across Europe, such as **NOx, SO2, NH3, CO, PM10, PM2.5, CH4, NMVOCs,** and **CO2**. The spatial resolution is **0.05° x 0.1°**. The dataset follows a "top-down" approach, starting from official national emissions inventories and distributing these emissions over a spatial grid. It uses auxiliary data (such as population density maps, industrial activity, and transport networks) to disaggregate regional or national emissions into a more detailed grid. This method ensures consistency with reported official data, facilitating air quality modeling and policy support. For more details, refer to the [publication](https://essd.copernicus.org/articles/14/491/2022/).
 
-## 🛠️ **Methodology**
-1. **Annual Data Extraction**: 📥 Extract yearly emissions data for Italy from the CAMS-REG-ANT dataset.
-2. **Temporal Transformation**: 🗓️ Convert annual emissions to daily estimates using the CAMS-REG-TEMPO profiles. Each day reflects variations in monthly, weekly, and daily emissions patterns.
-3. **Municipality Data Integration**: 🗺️ Match daily emissions to each Italian municipality's administrative boundaries for localized analysis.
-4. **Dataset Compilation**: 📊 Compile the final dataset with daily emissions metrics per municipality, suitable for environmental studies and policymaking.
+![CAMS-REG-ANT Data Representation](path/to/your/image.png)
 
-![Flow Chart of Methodology](IEDD_FlowChart_V1.png)
+- **CAMS-REG-TEMPO**: 🗓️ This dataset provides temporal profiles that enable the breakdown of annual emissions into finer temporal resolutions (monthly, daily, weekly, and hourly). It incorporates data from diverse sources, including socio-economic and meteorological factors, to model temporal emission variations across sectors like energy, transport, and agriculture. The dataset enhances spatial and temporal detail, supporting accurate air quality modeling across Europe. For more information, refer to the [publication](https://essd.copernicus.org/articles/13/367/2021/).
 
 ## 📑 **GNFR Sectors**
 The GNFR (Gridded Nomenclature for Reporting) sectors categorize emissions by activity:
@@ -32,12 +26,26 @@ The GNFR (Gridded Nomenclature for Reporting) sectors categorize emissions by ac
 - **K Agriculture**: 🌾 Agricultural production emissions.
 - **L Other Agricultural Sources**: 🌳 Emissions not classified above.
 
+
+## 🛠️ **Methodology**
+1. **Annual Data Extraction**: 📥 Retrieve yearly emissions data for Italy from the CAMS-REG-ANT dataset, which uses a top-down approach to distribute national-level emissions across a detailed spatial grid.
+2. **Temporal Transformation**: 🗓️ Break down annual emissions into daily estimates using CAMS-REG-TEMPO profiles. These profiles capture variations across different temporal scales (monthly, weekly, daily, and hourly) to provide a more accurate representation of emissions patterns.
+3. **Municipality Data Integration**: 🗺️ Align daily emissions data with administrative boundaries of Italian municipalities, ensuring localized analysis.
+4. **Dataset Compilation**: 📊 Assemble the final dataset with daily emissions metrics for each municipality, aiding environmental studies and policy-making.
+
+![Flow Chart of Methodology](IEDD_FlowChart_V1.png)
+
+
 ## 📂 **Repository Structure**
-- 📁 `/annual_camsreg_data`: CAMS-REG-ANT annual datasets.
-- 📁 `/daily_emissions`: Daily emissions processed using CAMS-REG-TEMPO.
-- 📁 `/municipality_boundaries`: Geospatial data of Italian municipalities.
-- 📁 `/transformation_scripts`: Scripts and methodologies for data processing.
-- 📁 `/documentation`: Detailed explanations of CAMS-REG-ANT, CAMS-REG-TEMPO, and data structure.
+- 📁 `/ChangeOfSupport`: Scripts and methodologies for changing the spatial resolution of emissions data from grid cells to municipality boundaries.
+- 📁 `/Computation`: Processing and analysis scripts for data transformation.
+- 📁 `/Data`: Raw and processed data related to emissions.
+- 📁 `/ExtractANT`: Scripts for extracting data from the CAMS-REG-ANT dataset.
+- 📁 `/ExtractTEMPO`: Scripts for extracting temporal profiles from the CAMS-REG-TEMPO dataset.
+- 📁 `/PlotFunctions`: Functions for generating visualizations of emissions data.
+- 📝 `Config`: Configuration file for setting parameters and environment variables.
+- 📝 `Utils`: Utility functions and helper scripts for various tasks.
+- 📝 `Main`: Main script to orchestrate the data processing workflow.
 
 ## 🏆 **Potential Applications**
 - **Environmental Impact Assessments**: 🌿 Analyze daily emissions impacts on local/regional environments.

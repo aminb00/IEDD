@@ -15,8 +15,6 @@ The IEDD project aims to build a comprehensive dataset representing daily emissi
 - **CAMS-REG-TEMPO**: 🗓️ This dataset provides temporal profiles that disaggregate annual emissions into finer resolutions (monthly, daily, weekly, hourly). It uses socio-economic, meteorological, and statistical data to model variations across sectors, improving emissions modeling across Europe. For more information, see the [publication](https://essd.copernicus.org/articles/13/367/2021/).
 
 
-- **CAMS-REG-TEMPO**: 🗓️ This dataset provides temporal profiles that enable the breakdown of annual emissions into finer temporal resolutions (monthly, daily, weekly, and hourly). It incorporates data from diverse sources, including socio-economic and meteorological factors, to model temporal emission variations across sectors like energy, transport, and agriculture. The dataset enhances spatial and temporal detail, supporting accurate air quality modeling across Europe. For more information, refer to the [publication](https://essd.copernicus.org/articles/13/367/2021/).
-
 ## 📑 **GNFR Sectors**
 The GNFR (Gridded Nomenclature for Reporting) sectors categorize emissions by activity:
 

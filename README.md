@@ -35,7 +35,7 @@ The GNFR (Gridded Nomenclature for Reporting) sectors categorize emissions by ac
 3. **Municipality Data Integration**: 🗺️ Align daily emissions data with administrative boundaries of Italian municipalities, ensuring localized analysis.
 4. **Dataset Compilation**: 📊 Assemble the final dataset with daily emissions metrics for each municipality, aiding environmental studies and policy-making.
 
-![Flow Chart of Methodology](IEDD_FlowChart3.png)
+![Flow Chart of Methodology](FlowChart3.png)
 
 
 ## 📂 **Repository Structure**

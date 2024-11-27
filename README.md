@@ -1,123 +1,112 @@
-# 🌍 **Italian Emissions Daily Dataset (IEDD)**
+# 🌍 Italian Daily Geo-referenced Emissions through Inventories and Temporal Profiles
 
-## 📜 **Project Overview**
-The IEDD project aims to build a comprehensive dataset representing daily emissions in Italian municipalities. The dataset leverages detailed data from the CAMS-REG-ANT datasets and employs CAMS-REG-TEMPO weight factors for accurate temporal distribution.
-### 🔍 **Background**
-- **CAMS-REG-ANT**: 🌐 Annual emissions data covering key pollutants across Europe, including **NOx**, **SO2**, **NH3**, **CO**, **PM10**, **PM2.5**, **CH4**, **NMVOCs**, and **CO2**. The spatial resolution is **0.05° x 0.1°**. This dataset uses a "top-down" approach, starting from official national inventories and distributing emissions over a spatial grid using auxiliary data (like population density and industrial activity). This ensures consistency with reported data, aiding air quality modeling and policy support. For more details, refer to the [publication](https://essd.copernicus.org/articles/14/491/2022/).
+## 📜 Abstract
+This study presents the development of the **Italian Emission Daily Dataset (IEDD)**, an advanced dataset providing high-resolution daily emission data for Italy from 2000 to 2020. Combining annual emissions from **CAMS-REG-ANT** and temporal profiles from **CAMS-REG-TEMPO**, the IEDD addresses the limitations of existing inventories, offering a valuable tool for air quality modeling, environmental policy analysis, and urban planning. The dataset captures sector-specific spatial and temporal emission dynamics, including transport, residential heating, and industrial processes.
 
-<div style="text-align: center;">
-    <img src="regANT-image1.png" alt="CAMS-REG-ANT construction">
-</div>
+## 🔍 Introduction
+### Context
+- Italy faces significant air pollution challenges, particularly in the **Po Valley**, one of the most densely populated and industrialized areas in Europe. The valley's unique topography and frequent thermal inversions exacerbate pollutant concentrations.
+- Traditional emission datasets focus on annual or monthly resolutions, which fail to capture daily variability crucial for analyzing transport, heating, and industrial activities.
 
-- **CAMS-REG-TEMPO**: 🗓️ This dataset provides temporal profiles that disaggregate annual emissions into finer resolutions (monthly, daily, weekly, hourly). It uses socio-economic, meteorological, and statistical data to model variations across sectors, improving emissions modeling across Europe. For more information, see the [publication](https://essd.copernicus.org/articles/13/367/2021/).
+### Objective
+The **IEDD** aims to provide high-resolution daily emission data to:
+- Improve the accuracy of air quality and climate models.
+- Support policy evaluations for short-term interventions (e.g., traffic restrictions or emission caps).
+- Assist in urban planning by identifying pollution hotspots.
 
+## 📑 Data Sources
+### CAMS-REG-ANT
+- **Annual Emissions Inventory**:
+  - Covers pollutants: **NOx, SO2, NH3, CO, PM10, PM2.5, CH4, NMVOCs, CO2**.
+  - Spatial resolution: **0.05° × 0.1° grid**.
+  - Combines reported data and model estimates across sectors.
 
-## 📑 **GNFR Sectors**
-The GNFR (Gridded Nomenclature for Reporting) sectors categorize emissions by activity:
+### CAMS-REG-TEMPO
+- **Temporal Profiles**:
+  - Captures daily, weekly, and seasonal emission patterns.
+  - Accounts for meteorological, economic, and social activity variations.
+  - Enables disaggregation of annual emissions into finer temporal scales.
 
-- **A Public Power and Heat Production**: 🔋 Emissions from public power, heat, and cogeneration plants.
-- **B Industrial Combustion**: 🏭 Emissions from industrial manufacturing combustion.
-- **C Other Stationary Combustion**: 🏠 Emissions not covered by public power or industrial combustion.
-- **D Fugitive Emissions**: ⛽ From extraction and distribution of fuels.
-- **E Solvent and Product Use**: 🧪 Solvents in processes and products.
-- **F Road Transport**: 🚗 Road vehicle emissions.
-- **G Shipping**: 🚢 Domestic and international shipping emissions.
-- **H Aviation**: ✈️ National and international aviation emissions.
-- **I Offroad Transport**: 🚜 Vehicles in agriculture and forestry.
-- **J Waste Treatment and Disposal**: 🗑️ Emissions from waste processes.
-- **K Agriculture**: 🌾 Agricultural production emissions.
-- **L Other Agricultural Sources**: 🌳 Emissions not classified above.
+## 🛠️ Methodology
+The methodology integrates annual emissions from **CAMS-REG-ANT** with temporal profiles from **CAMS-REG-TEMPO** to compute daily emissions for each pollutant, sector, and grid cell.
 
+### **1. Annual Emissions Extraction**
+- **Data Selection**:
+  - Used **CAMS-REG-ANT v5.1** for 2000–2018 and **v6.1** for 2019–2020.
+- **Emission Formula**:
+  Annual emissions (\(E_{i,s,j}\)) for grid cell \(i\), sector \(s\), and year \(j\) serve as the base input for daily calculations.
 
-## 🛠️ **Methodology**
-1. **Annual Data Extraction**: 📥 Retrieve yearly emissions data for Italy from the CAMS-REG-ANT dataset, which uses a top-down approach to distribute national-level emissions across a detailed spatial grid.
-2. **Temporal Transformation**: 🗓️ Break down annual emissions into daily estimates using CAMS-REG-TEMPO profiles. These profiles capture variations across different temporal scales (monthly, weekly, daily, and hourly) to provide a more accurate representation of emissions patterns.
-3. **Municipality Data Integration**: 🗺️ Align daily emissions data with administrative boundaries of Italian municipalities, ensuring localized analysis.
-4. **Dataset Compilation**: 📊 Assemble the final dataset with daily emissions metrics for each municipality, aiding environmental studies and policy-making.
+### **2. Temporal Disaggregation**
+Temporal profiles are applied to convert annual emissions into daily values.
 
-![Flow Chart of Methodology](FlowChart3.png)
+#### **Case 1: Daily Profiles Available**
+- Direct application of daily factors (\(W_{i,s,d}\)):
+  \[
+  E_{i,s,t} = E_{i,s,j} \cdot W_{i,s,d}
+  \]
 
+#### **Case 2: Monthly and Weekly Profiles**
+- Combined use of monthly (\(X_{i,s,j,m}\)) and weekly (\(Y_{s,d}\)) factors:
+  \[
+  E_{i,s,t} = E_{i,s,j} \cdot (X_{i,s,j,m} \cdot Y_{s,d})
+  \]
 
-## 📂 **Repository Structure**
-- 📁 `/ChangeOfSupport`: Scripts and methodologies for changing the spatial resolution of emissions data from grid cells to municipality boundaries.
-- 📁 `/Computation`: Processing and analysis scripts for data transformation.
-- 📁 `/Data`: Raw and processed data related to emissions.
-- 📁 `/ExtractANT`: Scripts for extracting data from the CAMS-REG-ANT dataset.
-- 📁 `/ExtractTEMPO`: Scripts for extracting temporal profiles from the CAMS-REG-TEMPO dataset.
-- 📁 `/PlotFunctions`: Functions for generating visualizations of emissions data.
-- 📝 `Config`: Configuration file for setting parameters and environment variables.
-- 📝 `Utils`: Utility functions and helper scripts for various tasks.
-- 📝 `Main`: Main script to orchestrate the data processing workflow.
+#### **Case 3: Simplified Monthly and Weekly Profiles**
+- For pollutants or sectors lacking detailed profiles, simplified factors (\(x_{s,m}\), \(y_{s,d}\)) are used:
+  \[
+  E_{i,s,t} = E_{i,s,j} \cdot (x_{s,m} \cdot y_{s,d})
+  \]
 
-## 📊 **2020 NH3 Emissions in Italy**
-Here is the representation of the NH3 emissions in Italy for the year 2020. The map shows the spatial distribution of emissions, highlighting cells with higher concentrations.
+### **3. Geographic Alignment**
+- **Change of Support**: Gridded emissions (\(0.05° × 0.1°\)) are mapped to Italian municipal boundaries using spatial interpolation techniques.
+- Allows localized analysis and integration with socio-economic datasets.
 
-![NH3 Emissions in Italy 2020](NH3_Emissions_Italy_HighRes.png)
+## 📊 Results
+### **Dataset Features**
+- **Temporal Resolution**: Daily emissions for 7671 days (2000–2020).
+- **Spatial Coverage**: Entire Italian territory, aligned to municipality boundaries.
+- **Pollutants**: NOx, SO2, NH3, CO, PM10, PM2.5, NMVOC, and more.
 
-# Main characteristics of the CAMS-REG-TEMPOv4.1 dataset
+### **Validation**
+- Compared with **AGRIMONIA** and **ISPRA** datasets.
+- Key Findings:
+  - **NOx**: Significant reductions from 2000 to 2020 due to stricter transport regulations.
+  - **PM**: Residential heating remains a consistent contributor.
 
-The following table provides an overview of the main characteristics of the CAMS-REG-TEMPOv4.1 dataset, reported by sector and temporal resolution (monthly, daily, weekly, hourly). These profiles are used to model emissions data by sector, pollutant, and spatial scale.
+## 🌍 Visualizations
+### **Heatmaps**
+- **Monthly Trends**: Highlight seasonal variations for pollutants like NH3 and PM10.
+- **Pollution Hotspots**: Po Valley consistently shows elevated concentrations.
 
-| Sector   | Description                               | Monthly (Σ=12)                        | Daily (Σ=365/366)(1)                  | Weekly (Σ=7)                          | Hourly (Σ=24)                        |
-|----------|-------------------------------------------|---------------------------------------|---------------------------------------|---------------------------------------|---------------------------------------|
-| GNFR_A   | Public Power                               | Per country, pollutant                | -                                     | Per country, pollutant                | Per country, pollutant               |
-| GNFR_B   | Industry                                   | Per country                           | -                                     | -                                     | Fixed(2)                             |
-| GNFR_C   | Other stationary combustion                | Per grid cell, pollutant, year        | Per grid cell, pollutant, year        | Per pollutant                        | Per pollutant                        |
-| GNFR_D   | Fugitive emissions                         | Fixed(2)                              | -                                     | Fixed(2)                              | Fixed(2)                             |
-| GNFR_E   | Solvents                                   | Fixed(2)                              | -                                     | Fixed(2)                              | Fixed(2)                             |
-| GNFR_F1  | Road transport exhaust gasoline            | Per year, grid cell for CO and NMVOC; per grid cell for others | -                                     | Per country, day type                 | Per country, day type                |
-| GNFR_F2  | Road transport exhaust diesel              | Per year, grid cell for NOx; per grid cell for others | -                                     | Per country, day type                 | Per country, day type                |
-| GNFR_F3  | Road transport exhaust LPG                 | Per grid cell                         | -                                     | -                                     | Per country, day type                |
-| GNFR_F4  | Road transport non-exhaust (wear and evaporative) | Per grid cell                         | -                                     | -                                     | Fixed for NMVOC                      |
-| GNFR_G   | Shipping                                   | Per sea region and pollutant          | -                                     | -                                     | Fixed(2)                             |
-| GNFR_H   | Aviation                                   | Per country                           | -                                     | -                                     | Fixed, per pollutant                 |
-| GNFR_I   | Off road transport                         | Fixed, per pollutant                  | -                                     | Fixed, per pollutant                  | Fixed, per pollutant                 |
-| GNFR_J   | Waste management                           | Fixed(2)                              | -                                     | Fixed(2)                              | Fixed(2)                             |
-| GNFR_K   | Agriculture (livestock)                    | Per grid cell, year for NH3 and NOx; fixed for NH3 and NOx | Per grid cell, year for NH3 and NOx   | -                                     | Fixed for pollutant                  |
-| GNFR_L   | Agriculture (fertilizers, agricultural waste burning) | Per country for CH4, per grid cell for NH3, others(3) | Per grid cell, year for NH3           | -                                     | Fixed, per pollutant                 |
+### **Temporal Trends**
+- Road transport emissions peak during weekdays.
+- Winter months show higher residential heating emissions.
 
-### Notes:
-1. **Leap or non-leap years**: Daily profiles account for the leap year, adjusting the number of days accordingly.
-2. **Fixed(2)**: Same profiles as those reported by the TNO dataset (Denier van der Gon et al., 2011).
-3. **For CH4**: Same profiles as the ones reported by Crippa et al. (2020).
+## 🏆 Applications
+The IEDD dataset enables:
+1. **Policy Analysis**:
+   - Evaluate emission caps or traffic restrictions.
+2. **Air Quality Modeling**:
+   - Input for forecasting tools to predict pollution levels.
+3. **Public Health Research**:
+   - Correlate daily pollution with short-term health outcomes.
+4. **Urban Planning**:
+   - Identify hotspots and optimize infrastructure.
 
-Source: CAMS261_2022SC1 – Product documentation.
+## 🚀 Future Work
+- **Dataset Expansion**:
+  - Include CH4 and CO2 with improved temporal profiles.
+  - Extend coverage to 2022 using **CAMS-REG-TEMPO v4.1**.
+- **Advanced Applications**:
+  - Integrate socio-economic indicators (e.g., GDP, population density).
+  - Enhance visualization tools for stakeholders.
 
-## 🔄 **Change of Support**
+## 🙌 Acknowledgments
+- **Copernicus Atmosphere Monitoring Service** for data access.
+- Academic advisors and collaborators for their guidance and support.
 
-The concept of **Change of Support** involves transforming data from one spatial resolution or support (such as a grid of cells) to another (such as administrative boundaries like municipalities). This process is essential when trying to associate gridded data (such as emissions or pollution data) with specific geographic regions that are used in administrative or policy-making contexts.
+---
 
-In this project, we will perform a **change of support** by transitioning data from grid cells (with a resolution of 0.05° x 0.1°) to the boundaries of Italian municipalities. This will allow us to analyze and visualize emissions at a local level, directly linked to municipalities, rather than using arbitrary grid cells.
+## 📂 View My Thesis
+[Click here to view my uploaded thesis file.](INSERT_LINK_TO_YOUR_THESIS)
 
-Below, you can see the two types of spatial resolutions that we will be using in the transformation:
-
-<div style="display: flex; justify-content: space-around;">
-    <div style="text-align: center;">
-        <img src="2020NH3emissionsITALY.png" alt="Grid Cell Map" style="width: 70%;">
-        <p>Grid Cell Data</p> 
-    </div>
-   <div style="text-align: center;">
-        <img src="ITA-Municipalities-MAP.png" alt="Municipality Map" style="width: 70%;">
-        <p>Municipality Data</p>
-    </div>
-</div>
-
-## 🏆 **Potential Applications and Usage**
-The Italian Emissions Daily Dataset (IEDD) provides versatile applications across environmental, economic, and policy domains. It enables detailed **environmental impact assessments** by highlighting daily emission patterns, identifying pollution hotspots, and assessing seasonal or regional trends. Policymakers can utilize this data to design effective regulations, correlating emissions with **socio-economic factors** such as GDP, industrial activity, or traffic data, thereby creating more targeted interventions. Additionally, it facilitates **economic analyses**, comparing emissions per capita or per GDP unit, which supports sustainable growth initiatives. Lastly, the dataset can enhance **public awareness** by linking emissions to everyday activities, fostering a deeper understanding of local environmental challenges. This comprehensive, high-resolution dataset is ideal for academic research, policy-making, economic planning, and public education, driving data-informed decisions toward sustainability.
-
-
-## 🙌 **Contributing**
-Contributions are welcome, such as:
-- 🛠️ Improving data extraction/transformation scripts.
-- 🔍 Enhancing the dataset with supplementary data.
-- 🐞 Reporting and fixing issues with data accuracy.
-
-## 📜 **License**
-This project is licensed under the [MIT License](LICENSE).
-
-## Contact
-For any queries regarding the project, please reach out to [Project Maintainer's Email].
-
-## Acknowledgements
-- [Data Source Providers]
-- [Contributors and Collaborators]

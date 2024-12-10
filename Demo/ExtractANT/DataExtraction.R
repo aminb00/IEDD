@@ -121,8 +121,8 @@ build_yearly_matrix <- function(all_data_list, lon_lat_idx) {
   
   # Assign dimension names to the all_data_matrix
   dimnames(all_data_matrix) <- list(
-    x = lon_rounded,  # Rounded longitude coordinates
-    y = lat_rounded,  # Rounded latitude coordinates
+    x = lon_lat_idx$lon[lon_lat_idx$lon_idx],  # Rounded longitude coordinates
+    y = lon_lat_idx$lat[lon_lat_idx$lat_idx],  # Rounded latitude coordinates
     sector = names(sector_names),  # Sectors (e.g., climate variables)
     year = names(all_data_list)  # Years (e.g., 2000, 2001, etc.)
   )

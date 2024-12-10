@@ -46,7 +46,7 @@ extract_data <- function(data) {
 }
 
 # Estrazione dei dati aggregati
-all_data <- extract_data(REG_ANT_yearly_data)
+all_data <- extract_data(REG_ANT_yearly_data_nh3)
 
 # Troviamo il range massimo e minimo per uniformare i grafici
 y_range <- range(all_data$Value)

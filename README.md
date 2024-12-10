@@ -68,32 +68,45 @@ To start working with the IEDD, follow these steps:
 
 ### 2. Download Required CAMS Data
 
-- **Register and Access ECCAD**:  
-  Visit [https://eccad.aeris-data.fr/](https://eccad.aeris-data.fr/) and create an account if you haven’t already. After logging in, navigate to the relevant CAMS emission inventory sections.
+#### Register and Access ECCAD
+- Visit [ECCAD](https://eccad.aeris-data.fr/) and create an account if you haven’t already.
+- After logging in, navigate to the relevant CAMS emission inventory sections.
 
-- **Download CAMS-REG-ANT Annual Files**:  
-  Choose the CAMS-REG-ANT versions covering the years 2000–2020 (e.g., v5.1 for 2000–2018 and v6.1 for 2019–2020). Download the NetCDF files for each pollutant of interest (e.g., NOx, SO₂, NH₃, CO, NMVOC, PM₁₀, PM₂.₅).
+#### Download CAMS-REG-ANT Annual Files
+- Choose the CAMS-REG-ANT versions covering the years 2000–2020 (e.g., v5.1 for 2000–2018 and v6.1 for 2019–2020).
+- Download the NetCDF files for each pollutant of interest (e.g., NOx, SO₂, NH₃, CO, NMVOC, PM₁₀, PM₂.₅).
+- Once downloaded, place these NetCDF files into:
 
-  Once downloaded, place these NetCDF files into:
-  IEDD/Demo/Data/Raw/CAMS-REG-ANT/
-  
-  - **Download CAMS-REG-TEMPO Profiles**:  
-Navigate to the CAMS-REG-TEMPO datasets on ECCAD. Download the NetCDF files containing monthly, weekly, and (if available) daily profiles. Place these files into:
+```
+IEDD/Demo/Data/Raw/CAMS-REG-ANT/
+```
+
+#### Download CAMS-REG-TEMPO Profiles
+- Navigate to the CAMS-REG-TEMPO datasets on ECCAD.
+- Download the NetCDF files containing monthly, weekly, and (if available) daily profiles.
+- Place these files into:
+
+```
 IEDD/Demo/Data/Raw/CAMS-REG-TEMPO/
+```
 
-- **CAMS-REG-TEMPO v4.1 Simplified CSV Files**:  
-If using simplified profiles, which come in CSV format (e.g., monthly and weekly factors), download them and place into:
+#### CAMS-REG-TEMPO v4.1 Simplified CSV Files
+- If using simplified profiles, which come in CSV format (e.g., monthly and weekly factors), download them and place them into:
+
+```
 IEDD/Demo/Data/Raw/CAMS-REG-TEMPO-SIMPLIFIED/
+```
 
 ### 3. Set Up R Environment
 
-- **Install R **:  
-Ensure R (≥ 4.0) is installed
-  
+- **Install R**:
+  - Ensure R (≥ 4.0) is installed on your system.
+
 ### Verifying Your Setup
 
 Your directory structure should look like this after completing the previous steps:
 
+```
 IEDD/
 ├─ Demo/
 │  ├─ Data/
@@ -104,23 +117,37 @@ IEDD/
 │  ├─ Scripts/                         # R scripts for processing and analysis
 │  ├─ Outputs/                         # Generated outputs after running scripts
 │  │  ├─ Processed/                    # Processed daily emission data (e.g., .rds files)
-  
-  
+```
+
+---
+
 ## Future Plans and Contributions
 
 The IEDD is a living dataset, open to updates as new data, temporal profiles, or improved methodologies become available. Potential future developments include:
-- Adding CH4 and CO2 emissions once daily profiles become robust.
+
+- Adding CH₄ and CO₂ emissions once daily profiles become robust.
 - Extending the dataset beyond 2020.
 - Integrating near-real-time activity data for more dynamic emission estimates.
 
 Contributions from the community are welcome. Whether you identify data inconsistencies, propose methodological enhancements, or share your modeling experiences, your input can help refine and strengthen the IEDD.
 
+---
+
 ## References and Licensing
 
-Please refer to the **References** section in each of the documentation files for the scientific and technical literature underlying CAMS data and temporal profiles.
+- Please refer to the **References** section in each of the documentation files for the scientific and technical literature underlying CAMS data and temporal profiles.
+- The code and documentation provided in this repository are released under the MIT License, allowing for broad reuse, modification, and redistribution. For details, see the `LICENSE.md` file.
 
-The code and documentation provided in this repository are released under the MIT License, allowing for broad reuse, modification, and redistribution. For details, see the `LICENSE.md` file.
+---
 
+## Contact and Support
+
+For questions, bug reports, or further information:
+
+- Open an issue on this repository’s issue tracker.
+- Contact the maintainers or lead authors directly (contact information provided in the repository homepage or accompanying publications).
+
+Your feedback is valuable and will help us improve the dataset’s quality, usability, and relevance.
 ## Contact and Support
 
 For questions, bug reports, or further information:

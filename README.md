@@ -1,114 +1,167 @@
-# Italian Emission Daily Dataset (IEDD)
+# IEDD Methodology
 
 ## Introduction
 
-Welcome to the **Italian Emission Daily Dataset (IEDD)** repository. The IEDD provides daily emission estimates for key atmospheric pollutants across the Italian territory for the period 2000–2020, with a high spatial resolution of 0.05° x 0.1°. By leveraging cutting-edge data from the Copernicus Atmosphere Monitoring Service (CAMS) inventories and temporal profiles, the IEDD fills a critical gap in providing temporally granular emission data—moving beyond annual averages to day-by-day variations.
+The **Italian Emission Daily Dataset (IEDD)** is constructed through a well-defined methodology that combines annual gridded emission inventories, sector-specific temporal profiles, and robust data processing techniques. The core idea is to disaggregate annual emissions into daily values, while maintaining internal consistency, sectoral detail, and alignment with established inventories (CAMS-REG-ANT) and temporal profiles (CAMS-REG-TEMPO).
 
-The primary goal of the IEDD is to enable a deeper understanding of short-term emission dynamics. Such temporal detail supports refined air quality modeling, nuanced policy assessments, climate and health studies, and scenario evaluations that demand insights into when, how, and why emissions fluctuate over time.
+This document details each step of the IEDD methodological framework, from data acquisition and filtering to the mathematical formulas and quality checks that ensure reliable daily emission estimates. Our aim is to provide a rigorous, transparent, and reproducible methodology.
 
-## Repository Structure
+## Conceptual Overview
 
-The repository is organized as follows:
+1. **Start from Annual Data**: Use CAMS-REG-ANT as the baseline. These files contain annual mean emissions for each pollutant and sector over Europe, including Italy, on a 0.05° x 0.1° grid.
 
-- **Documentation**: Contains detailed explanatory files providing in-depth information about the dataset’s background, methodologies, and the underlying CAMS inventories.  
-  - [IEDD Scope](Documentation/IEDDscope.md): Introduces the rationale for and objectives of the IEDD, explaining the scientific motivation behind daily emission data, its relevance to Italy’s unique emission landscape, and the intended user community.
-  - [CAMS Inventories](Documentation/CAMSinventories.md): Outlines the foundational role of CAMS-REG-ANT and CAMS-REG-TEMPO datasets, detailing their spatial resolution, pollutant/sector coverage, data quality, and how they serve as essential building blocks for the IEDD.
-  - [IEDD Methodology](Documentation/IEDDmethodology.md): Provides a thorough explanation of the step-by-step process used to convert annual emissions into daily values, including mathematical formulations, handling of monthly/weekly/daily profiles, leap year considerations, spatial clipping, and internal validation checks.
+2. **Apply Temporal Profiles**: Use CAMS-REG-TEMPO (and if needed, CAMS-REG-TEMPO v4.1 Simplified) to break down annual totals into daily values. These profiles capture monthly, weekly, and/or daily variations.
 
-- **Data**: (Not provided in this repository)  
-  Processed data files (e.g., daily emission matrices in `.rds` or `.nc` format) are expected to be hosted externally due to their size. Instructions or links for downloading these data files will be provided as the dataset becomes publicly available.
+3. **Consistency Checks**: Ensure that summing the daily emissions over a year returns the original annual total.
 
-- **Scripts**:  
-  A set of R scripts and/or Jupyter notebooks that demonstrate how to:
-  - Load CAMS-REG-ANT and CAMS-REG-TEMPO data
-  - Apply temporal profiles
-  - Validate the outcomes
-  - Generate final daily emission arrays
+4. **Refine and Validate**: Compare against known emission trends and external data.
 
-- **Examples**:  
-  Contains code snippets and practical examples for users to quickly get started with extracting, analyzing, and visualizing IEDD data.
+This ensures the final IEDD respects original data integrity and adds valuable temporal resolution.
 
-- **References and Licenses**:  
-  Relevant publications, acknowledgments, and license information.
+## Data Inputs
 
-## IEDD Scope and Foundational Concepts
+### CAMS-REG-ANT Annual Emission Files
 
-For an in-depth understanding of the motivation, scientific questions, and potential applications of the IEDD, please see [IEDD Scope](Documentation/IEDDscope.md).
+- Pollutants: NOx, SO2, NMVOC, NH3, CO, PM10, PM2.5.
+- Years: 2000–2020.
+- Sectors: GNFR A–L.
+- Format: NetCDF files (annual mean emissions at each grid cell).
 
-Key aspects:
-- **Why daily data?** Annual emissions mask the complex variability driven by daily changes in activities, weather, and policy interventions.
-- **Relevance to Italy**: The Italian domain, with its industrialized Po Valley, diverse climates, and maritime activities, serves as a rich testing ground for daily-level analyses.
-- **Intended users**: Scientists, policymakers, urban planners, NGOs, and stakeholders interested in short-term pollution events, targeted mitigation, and evaluating regulatory impacts.
+These provide the base annual emission totals.
 
-## Underlying CAMS Inventories
+### CAMS-REG-TEMPO Temporal Profiles
 
-The IEDD draws its emission data and temporal factors from CAMS inventories:
+- Daily profiles: Fine-grained, if available.
+- Monthly + Weekly profiles: Used where daily profiles are not available.
+- CAMS-REG-TEMPO v4.1 Simplified: Country-level monthly and weekly factors.
 
-- **CAMS-REG-ANT**: Supplies the annual gridded baseline of pollutant emissions, ensuring consistent, harmonized data across sectors and pollutants.
-- **CAMS-REG-TEMPO**: Provides the temporal “keys” that transform annual totals into monthly, weekly, and daily profiles, capturing the dynamic nature of emission sources.
+These profiles may be in NetCDF or CSV formats.
 
-To learn more about these core datasets, their methodology, and their relevance to the IEDD, please consult [CAMS Inventories](Documentation/CAMSinventories.md).
+## Handling Different Levels of Temporal Detail
 
-## IEDD Methodology
+The IEDD uses different formulas depending on available temporal detail:
 
-The construction of the IEDD entails:
-1. Starting from annual baseline emissions (CAMS-REG-ANT).
-2. Applying temporal profiles (CAMS-REG-TEMPO) to disaggregate emissions into daily values.
-3. Ensuring temporal consistency (sums over the year remain unchanged), handling leap years, and validating against independent data.
-
-A detailed methodological guide is provided in [IEDD Methodology](Documentation/IEDDmethodology.md). This document explains:
-- Mathematical formulas for temporal disaggregation
-- Sector- and pollutant-specific approaches
-- Data quality checks and uncertainty considerations
-- Step-by-step instructions for reproducing the results
-
-## Getting Started with IEDD
-
-To begin working with the IEDD:
-1. **Data Access**: The final daily emission data files are large. Once publicly released, a download link or instructions for accessing these data will be provided. After obtaining the data, you can integrate them into your modeling workflow or analysis environment.
+1. **Full Daily Profiles Available**:  
+   If a daily factor W(i,s,d) exists for grid cell i, sector s, and day d:
    
-2. **Software Requirements**:  
-   - **R environment** (e.g., R ≥ 4.0) for reading `.rds` files and executing the data processing scripts.
-   - **ncdf4** or **RNetCDF** packages if you choose to work with NetCDF data.
-   - **Data visualization** and **GIS tools** (e.g., ggplot2, raster, sf packages in R) to map emissions and analyze spatial patterns.
+   E(i,s,t) = E(i,s,j) * W(i,s,d)
+   
+   - E(i,s,j): Annual emission for grid cell i, sector s, year j.
+   - W(i,s,d): Daily fraction for day d.
 
-3. **Basic Workflow**:
-   - Load daily emission arrays.
-   - Extract specific pollutants, sectors, or spatial regions of interest.
-   - Perform time-series analyses to identify daily, weekly, or seasonal patterns.
-   - Combine IEDD data with meteorological data and atmospheric models (e.g., WRF-Chem, CMAQ, CHIMERE) to simulate air quality episodes or evaluate mitigation strategies.
+   Summation check: Σ over d=1 to D_j of E(i,s,d) = E(i,s,j), where D_j is the number of days in year j.
 
-4. **Examples and Tutorials**:  
-   Check the **Examples** folder for ready-to-run scripts that showcase:
-   - How to open and read daily emission files
-   - How to plot emissions for a specific day, month, or year
-   - How to aggregate data by sector or region
-   - How to integrate emissions into a simple model
+2. **Monthly and Weekly Profiles Only**:  
+   If daily profiles are not available, combine monthly and weekly factors:
+   
+   E(i,s,t) = E(i,s,j) * X(i,s,j,m) * Y(s,d)
+   
+   - X(i,s,j,m): Monthly fraction for month m in year j.
+   - Y(s,d): Weekly factor for day type d (e.g., Monday vs. Sunday).
 
-5. **Validation and Comparison**:
-   We encourage users to compare IEDD-based simulations with observed pollutant concentrations or other inventories. Feedback and findings can guide future improvements and refinements.
+   Monthly factors sum to 1 over the year; weekly factors sum to 7 over a week.
 
-## Future Plans and Contributions
+3. **Simplified Monthly and Weekly Profiles**:  
+   If only country-level, year-independent monthly (x(s,m)) and weekly (y(s,d)) factors exist:
+   
+   E(i,s,t) = E(i,s,j) * x(s,m) * y(s,d)
 
-The IEDD is a living dataset, open to updates as new data, temporal profiles, or improved methodologies become available. Potential future developments include:
-- Adding CH4 and CO2 emissions once daily profiles become robust.
-- Extending the dataset beyond 2020.
-- Integrating near-real-time activity data for more dynamic emission estimates.
+In all cases, the products of these factors are normalized so that when summed over all time units (days in a year), they recreate the annual total.
 
-Contributions from the community are welcome. Whether you identify data inconsistencies, propose methodological enhancements, or share your modeling experiences, your input can help refine and strengthen the IEDD.
+## Accounting for Leap Years and Calendar Variability
 
-## References and Licensing
+Leap years (2000, 2004, 2008, 2012, 2016, 2020) have 366 days. The code checks each year:
 
-Please refer to the **References** section in each of the documentation files for the scientific and technical literature underlying CAMS data and temporal profiles.
+- If leap year, D_j=366; else D_j=365.
 
-The code and documentation provided in this repository are released under the MIT License, allowing for broad reuse, modification, and redistribution. For details, see the `LICENSE.md` file.
+For monthly/weekly combinations, the shorter or longer February affects the daily distribution. February 29 is accounted for in leap years.
 
-## Contact and Support
+## Spatial Domain Clipping and Focus on Italy
 
-For questions, bug reports, or further information:
-- Open an issue on this repository’s issue tracker.
-- Contact the maintainers or lead authors directly (contact information provided in the repository homepage or accompanying publications).
+CAMS data cover Europe. We subset the domain to include only Italy’s territory, reducing data volume and ensuring relevance to the Italian domain.
 
-Your feedback is valuable and will help us improve the dataset’s quality, usability, and relevance.
+Coastal and maritime areas may contain shipping-related emissions. They remain in the dataset. Users can mask them if needed.
 
----
+## Data Integration Steps
+
+### Step 1: Data Loading and Preprocessing
+
+- Load annual emissions from CAMS-REG-ANT (NetCDF).
+- Identify Italy’s grid indices (longitude, latitude).
+- Load temporal profiles (CAMS-REG-TEMPO) from NetCDF or CSV.
+
+### Step 2: Matching Sectors and Pollutants
+
+CAMS uses GNFR sector codes and standard pollutant names. For each pollutant and sector, determine if daily, monthly+weekly, or simplified factors apply.
+
+### Step 3: Temporal Disaggregation
+
+After matching the best profiles:
+- Extract E(i,s,j) from annual data.
+- Compute daily factors using W(i,s,d), or X(i,s,j,m)*Y(s,d), or x(s,m)*y(s,d).
+- Calculate E(i,s,t) accordingly.
+
+The result is a multidimensional dataset with daily values.
+
+### Step 4: Aggregation Checks
+
+Check if Σ E(i,s,t) over all days t equals E(i,s,j). Allowing a tiny floating-point tolerance, if discrepancies appear, apply normalization.
+
+### Step 5: Data Formatting and Storage
+
+The output is stored as .rds files (or other formats), typically:
+- Dimensions: lon ≈ 119, lat ≈ 232, time = 7,671 days (2000–2020).
+- Separate files per pollutant and sector.
+- A “sum” file with all sectors combined.
+
+## Quality Assurance, Validation, and Sensitivity Analysis
+
+### Internal Validation
+
+1. Temporal sum check: Ensures no mass loss/gain.
+2. Statistical comparison with original data.
+3. Visual inspection of seasonal patterns (e.g., NH3 peaks in fertilizer application periods).
+
+### External Validation
+
+Compare IEDD with:
+- National inventories (ISPRA).
+- Independent datasets (e.g., AGRIMONIA).
+- Modeled vs. observed pollutant concentrations.
+
+If daily resolution improves correlation with observations, it suggests the temporal disaggregation is realistic.
+
+### Uncertainty Considerations
+
+All emission estimates have uncertainties:
+- Uncertain activity data, emission factors, spatial proxies, temporal profiles.
+- IEDD introduces no new uncertainties but redistributes existing ones across days.
+- Future updates can reduce uncertainties by improving temporal profiles.
+
+## Computational Aspects
+
+Handling large data:
+- Process year by year, sector by sector to manage memory.
+- Utilize vectorized or parallel operations.
+- Store data in compressed binary formats to save disk space.
+
+## Reproducibility and Code Availability
+
+The full pipeline (data reading, profile application, final output) is available as open-source R code on GitHub. Users can:
+- Reproduce results from original CAMS data.
+- Modify profiles or pollutants.
+- Adapt to other regions or timeframes.
+
+This openness encourages verification, improvements, and adaptation by the research community.
+
+## Future Methodological Enhancements
+
+Potential improvements:
+1. Integrate near-real-time data (e.g., traffic counts) for current daily estimates.
+2. Add CH4 and CO2 once suitable daily profiles exist.
+3. Employ data assimilation techniques to refine daily patterns.
+4. Introduce year-specific sectoral profiles for evolving emission behaviors.
+
+## Conclusion
+
+The IEDD methodology is a systematic approach to enrich annual emission inventories with daily temporal detail. By applying robust temporal profiles and ensuring consistency, we produce a dataset beneficial for modeling, policy analysis, and scientific research. As new data and methods emerge, the methodology can evolve, maintaining relevance and accuracy over time.

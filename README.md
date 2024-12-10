@@ -66,6 +66,13 @@ A detailed methodological guide is provided in [IEDD Methodology](Documentation/
 
 To start working with the IEDD, follow these steps:
 
+### 1. Clone the Repository
+
+To begin, clone the IEDD repository to your local machine. Use the following command:
+
+```bash
+git clone https://github.com/aminb00/IEDD.git
+```
 ### 2. Download Required CAMS Data
 
 #### Register and Access ECCAD

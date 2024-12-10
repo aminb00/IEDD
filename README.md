@@ -62,32 +62,50 @@ A detailed methodological guide is provided in [IEDD Methodology](Documentation/
 - Data quality checks and uncertainty considerations
 - Step-by-step instructions for reproducing the results
 
-## Getting Started with IEDD
+## Getting Started
 
-To begin working with the IEDD:
-1. **Data Access**: The final daily emission data files are large. Once publicly released, a download link or instructions for accessing these data will be provided. After obtaining the data, you can integrate them into your modeling workflow or analysis environment.
-   
-2. **Software Requirements**:  
-   - **R environment** (e.g., R ≥ 4.0) for reading `.rds` files and executing the data processing scripts.
-   - **ncdf4** or **RNetCDF** packages if you choose to work with NetCDF data.
-   - **Data visualization** and **GIS tools** (e.g., ggplot2, raster, sf packages in R) to map emissions and analyze spatial patterns.
+To start working with the IEDD, follow these steps:
 
-3. **Basic Workflow**:
-   - Load daily emission arrays.
-   - Extract specific pollutants, sectors, or spatial regions of interest.
-   - Perform time-series analyses to identify daily, weekly, or seasonal patterns.
-   - Combine IEDD data with meteorological data and atmospheric models (e.g., WRF-Chem, CMAQ, CHIMERE) to simulate air quality episodes or evaluate mitigation strategies.
+### 2. Download Required CAMS Data
 
-4. **Examples and Tutorials**:  
-   Check the **Examples** folder for ready-to-run scripts that showcase:
-   - How to open and read daily emission files
-   - How to plot emissions for a specific day, month, or year
-   - How to aggregate data by sector or region
-   - How to integrate emissions into a simple model
+- **Register and Access ECCAD**:  
+  Visit [https://eccad.aeris-data.fr/](https://eccad.aeris-data.fr/) and create an account if you haven’t already. After logging in, navigate to the relevant CAMS emission inventory sections.
 
-5. **Validation and Comparison**:
-   We encourage users to compare IEDD-based simulations with observed pollutant concentrations or other inventories. Feedback and findings can guide future improvements and refinements.
+- **Download CAMS-REG-ANT Annual Files**:  
+  Choose the CAMS-REG-ANT versions covering the years 2000–2020 (e.g., v5.1 for 2000–2018 and v6.1 for 2019–2020). Download the NetCDF files for each pollutant of interest (e.g., NOx, SO₂, NH₃, CO, NMVOC, PM₁₀, PM₂.₅).
 
+  Once downloaded, place these NetCDF files into:
+  IEDD/Demo/Data/Raw/CAMS-REG-ANT/
+  
+  - **Download CAMS-REG-TEMPO Profiles**:  
+Navigate to the CAMS-REG-TEMPO datasets on ECCAD. Download the NetCDF files containing monthly, weekly, and (if available) daily profiles. Place these files into:
+IEDD/Demo/Data/Raw/CAMS-REG-TEMPO/
+
+- **CAMS-REG-TEMPO v4.1 Simplified CSV Files**:  
+If using simplified profiles, which come in CSV format (e.g., monthly and weekly factors), download them and place into:
+IEDD/Demo/Data/Raw/CAMS-REG-TEMPO-SIMPLIFIED/
+
+### 3. Set Up R Environment
+
+- **Install R **:  
+Ensure R (≥ 4.0) is installed
+  
+### Verifying Your Setup
+
+Your directory structure should look like this after completing the previous steps:
+
+IEDD/
+├─ Demo/
+│  ├─ Data/
+│  │  ├─ Raw/
+│  │  │  ├─ CAMS-REG-ANT/              # Contains NetCDF files for CAMS-REG-ANT
+│  │  │  ├─ CAMS-REG-TEMPO/            # Contains NetCDF files for CAMS-REG-TEMPO
+│  │  │  ├─ CAMS-REG-TEMPO-SIMPLIFIED/ # Contains CSV files for simplified profiles
+│  ├─ Scripts/                         # R scripts for processing and analysis
+│  ├─ Outputs/                         # Generated outputs after running scripts
+│  │  ├─ Processed/                    # Processed daily emission data (e.g., .rds files)
+  
+  
 ## Future Plans and Contributions
 
 The IEDD is a living dataset, open to updates as new data, temporal profiles, or improved methodologies become available. Potential future developments include:

@@ -1,11 +1,8 @@
-library(ncdf4)
-library(abind)
-library(reshape2)
 
-source("Demo\\Utils.R")
-source("Demo\\Config.R")
+source("Demo/Utils.R")
+source("Demo/Config.R")
 
-# Funzione per salvare i profili giornalieri in forma matriciale (3D) per anno
+# Function to save daily profiles as matrix (3D) per year
 save_daily_profiles_as_matrix <- function(list_of_dfs, start_year, output_dir,profile_name) {
   indexFromYear <- 1
   
@@ -35,7 +32,7 @@ save_daily_profiles_as_matrix <- function(list_of_dfs, start_year, output_dir,pr
   }
 }
 
-# Funzione per salvare i profili settimanali
+# Function for saving weekly profiles
 save_weekly_profiles <- function(list_of_dfs, output_dir, profile_name) {
   week_matrix <- NULL
   
@@ -49,7 +46,7 @@ save_weekly_profiles <- function(list_of_dfs, output_dir, profile_name) {
   saveRDS(week_matrix, file = file.path(output_dir, paste0(profile_name, "_weekly.rds")))
 }
 
-# Funzione astratta per gestire i profili mensili
+# Function for saving monthly profiles
 save_monthly_profiles <- function(list_of_dfs, output_dir, profile_name) {
   # Creare una matrice per i 12 mesi
   monthly_matrix <- NULL
@@ -66,7 +63,7 @@ save_monthly_profiles <- function(list_of_dfs, output_dir, profile_name) {
 
 process_profile <- function(nc_file_path_daily_weekly, nc_file_path_monthly, profile_name, output_dir) {
   
-  # Informazioni sui profili
+  # Info on the profile
   profile_info <- list(
     FW_F = list(var_name = "FW_F", temporal_dim = "weekly"),
     FW_H = list(var_name = "FW_H", temporal_dim = "weekly"),
@@ -107,12 +104,12 @@ process_profile <- function(nc_file_path_daily_weekly, nc_file_path_monthly, pro
     FM_G_sox = list(var_name = "FM_G_sox", temporal_dim = "monthly")
   )
   
-  # Verifica del profilo
+  # profile_name validation
   if (!(profile_name %in% names(profile_info))) {
     stop("Invalid profile name")
   }
   
-  # Seleziona automaticamente il file .nc in base al tipo di profilo
+  #Selecting the correct nc file path based on the temporal dimension
   nc_file_path <- if (profile_info[[profile_name]]$temporal_dim == "monthly") {
     nc_file_path_monthly
   } else {
@@ -121,7 +118,6 @@ process_profile <- function(nc_file_path_daily_weekly, nc_file_path_monthly, pro
   
   nc <- nc_open(nc_file_path)
   
-  # Ottenere lon, lat dal file netCDF
   lon <- ncvar_get(nc, "longitude")
   lat <- ncvar_get(nc, "latitude")
   
@@ -130,7 +126,7 @@ process_profile <- function(nc_file_path_daily_weekly, nc_file_path_monthly, pro
   lon_idx <- which(lon >= boundary[1] & lon <= boundary[2])
   lat_idx <- which(lat >= boundary[3] & lat <= boundary[4])
   
-  # Calcola il numero di periodi
+  # Calculate the number of periods based on the temporal dimension
   num_periods <- if (profile_info[[profile_name]]$temporal_dim == "daily") {
     nc$dim$time$len
   } else if (profile_info[[profile_name]]$temporal_dim == "monthly") {
@@ -156,7 +152,7 @@ process_profile <- function(nc_file_path_daily_weekly, nc_file_path_monthly, pro
   
   nc_close(nc)
   
-  # Gestire il profilo in base al tipo temporale
+  # Manage the temporal dimension
   if (profile_info[[profile_name]]$temporal_dim == "daily") {
     save_daily_profiles_as_matrix(list_of_dfs, 2000, output_dir,profile_name)
   } else if (profile_info[[profile_name]]$temporal_dim == "weekly") {

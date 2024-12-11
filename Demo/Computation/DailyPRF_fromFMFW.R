@@ -74,6 +74,9 @@ DailyPRF_fromFMFW <- function(FM_profile, FW_profile, sector) {
   }
 }
 
+
+
+
                          
   
   

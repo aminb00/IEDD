@@ -107,3 +107,4 @@ SumAllSectorsIntoOne <- function(input_folder, output_file, pollutant, start_yea
   
   cat("Sum of sectors completed:", output_file, "\n")
 }
+

@@ -81,5 +81,21 @@ create_multidimensional_profile_for_years <- function(startYear, endYear, monthl
   saveRDS(profile_array, file = file.path(output_folder, paste0(pollutant_name, "_SimpleProfile_", startYear, "_", endYear, ".rds")))
 }
 
-# Esempio di chiamata della funzione
-create_multidimensional_profile_for_years(2000, 2005, monthly_data, weekly_data, "output_folder_path", "NH3")
+
+
+#Create Simplified Daily Profile #sto punto non serve!
+source("Demo/Computation/CreateSIMPLEdailyProfile.R")
+
+# Define interval and profiles for simplified profile creation
+years_interval <- c(2000, 2020)
+output_folder <- "Demo/Data/Processed/TEMPO_data/SimplifiedDailyProfiles"
+nh3_monthly <- readRDS("Demo/Data/Processed/TEMPO_data/.rds")
+PollutantSimpleProfile <- list(nh3_monthly, nh3_weekly, "NH3")
+
+# Create simplified profiles for the specified years
+create_multidimensional_profile_for_years(years_interval[1], years_interval[2], 
+                                          PollutantSimpleProfile[[1]], 
+                                          PollutantSimpleProfile[[2]], 
+                                          output_folder, 
+                                          PollutantSimpleProfile[3])
+

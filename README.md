@@ -121,9 +121,8 @@ IEDD/
 │  │  │  ├─ CAMS-REG-ANT/              # Contains NetCDF files for CAMS-REG-ANT
 │  │  │  ├─ CAMS-REG-TEMPO/            # Contains NetCDF files for CAMS-REG-TEMPO
 │  │  │  ├─ CAMS-REG-TEMPO-SIMPLIFIED/ # Contains CSV files for simplified profiles
-│  ├─ Scripts/                         # R scripts for processing and analysis
-│  ├─ Outputs/                         # Generated outputs after running scripts
-│  │  ├─ Processed/                    # Processed daily emission data (e.g., .rds files)
+│  │                  # R scripts for processing and analysis
+│  │                
 ```
 
 ---

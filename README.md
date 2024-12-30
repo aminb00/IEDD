@@ -6,6 +6,15 @@ Welcome to the **Italian Emission Daily Dataset (IEDD)** repository. The IEDD pr
 
 The primary goal of the IEDD is to enable a deeper understanding of short-term emission dynamics. Such temporal detail supports refined air quality modeling, nuanced policy assessments, climate and health studies, and scenario evaluations that demand insights into when, how, and why emissions fluctuate over time.
 
+## Thesis Preview
+
+For a detailed explanation of the methodologies and scientific motivation behind the IEDD, you can consult the thesis directly:
+
+[📄 View the IEDD Thesis (PDF)](Documentation/IEDD_Thesis.pdf)
+
+---
+
+
 ## Repository Structure
 
 The repository is organized as follows:
@@ -154,12 +163,4 @@ For questions, bug reports, or further information:
 - Contact the maintainers or lead authors directly (contact information provided in the repository homepage or accompanying publications).
 
 Your feedback is valuable and will help us improve the dataset’s quality, usability, and relevance.
-## Contact and Support
 
-For questions, bug reports, or further information:
-- Open an issue on this repository’s issue tracker.
-- Contact the maintainers or lead authors directly (contact information provided in the repository homepage or accompanying publications).
-
-Your feedback is valuable and will help us improve the dataset’s quality, usability, and relevance.
-
----

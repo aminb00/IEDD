@@ -28,17 +28,11 @@ The repository is organized as follows:
   Processed data files (e.g., daily emission matrices in `.rds` or `.nc` format) are expected to be hosted externally due to their size. Instructions or links for downloading these data files will be provided as the dataset becomes publicly available.
 
 - **Scripts**:  
-  A set of R scripts and/or Jupyter notebooks that demonstrate how to:
+  A set of R scripts are used to:
   - Load CAMS-REG-ANT and CAMS-REG-TEMPO data
   - Apply temporal profiles
   - Validate the outcomes
   - Generate final daily emission arrays
-
-- **Examples**:  
-  Contains code snippets and practical examples for users to quickly get started with extracting, analyzing, and visualizing IEDD data.
-
-- **References and Licenses**:  
-  Relevant publications, acknowledgments, and license information.
 
 ## IEDD Scope and Foundational Concepts
 

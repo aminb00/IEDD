@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Welcome to the **Italian Emission Daily Dataset (IEDD)** repository. The IEDD provides daily emission estimates for key atmospheric pollutants across the Italian territory for the period 2000–2020, with a high spatial resolution of 0.05° x 0.1°. By leveraging cutting-edge data from the Copernicus Atmosphere Monitoring Service (CAMS) inventories and temporal profiles, the IEDD fills a critical gap in providing temporally granular emission data—moving beyond annual averages to day-by-day variations.
+The IEDD provides daily emission estimates for key atmospheric pollutants across the Italian territory for the period 2000–2020, with a high spatial resolution of 0.05° x 0.1°. By leveraging cutting-edge data from the Copernicus Atmosphere Monitoring Service (CAMS) inventories and temporal profiles, the IEDD fills a critical gap in providing temporally granular emission data—moving beyond annual averages to day-by-day variations.
 
 The primary goal of the IEDD is to enable a deeper understanding of short-term emission dynamics. Such temporal detail supports refined air quality modeling, nuanced policy assessments, climate and health studies, and scenario evaluations that demand insights into when, how, and why emissions fluctuate over time.
 
